@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useMediaQuery } from "@material-ui/core";
+import { Topbar } from "./components";
 type Props = {
   children: ReactNode;
   title?: string;
@@ -39,6 +40,7 @@ const Layout = ({ children, title = "LMS Registration" }: Props) => {
         content="https://nextjs-typescript-react-stripe-js.vercel.app/social_card.png"
       /> */}
       </Head>
+      <Topbar />
       <div className={classes.root}>{children}</div>
     </>
   );

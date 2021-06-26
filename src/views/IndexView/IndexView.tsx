@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getRecipes } from "apis";
 
 import { Button, Typography, Grid, TextField, Box } from "@material-ui/core";
 import { makeStyles, mergeClasses } from "@material-ui/styles";
@@ -8,8 +9,16 @@ import { CriteriaForm } from "components/organisms";
 const IndexView = () => {
   const classes = useStyles();
 
-  const onSubmit = () => {
-    console.log("submitting!");
+  interface IFormInputs {
+    ingredient: string;
+    amount?: string;
+    unit?: string;
+  }
+
+  const onSubmit = async (data: IFormInputs) => {
+    console.log(data);
+    const recipes = await getRecipes({ ...data });
+    console.log(recipes);
   };
 
   return (

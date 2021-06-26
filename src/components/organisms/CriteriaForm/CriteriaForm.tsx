@@ -2,13 +2,6 @@ import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { Button, Typography, Grid, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
-interface IFormInputs {
-  ingredient: string;
-  amount: string;
-  unit: string;
-  grade: string;
-}
-
 const CriteriaForm = ({ onSubmit }) => {
   const {
     handleSubmit,
@@ -34,7 +27,7 @@ const CriteriaForm = ({ onSubmit }) => {
         text = "";
         break;
     }
-    return <p>{text}</p>;
+    return text;
   };
 
   const isOptionalRequired = (amount, unit) => {
@@ -85,7 +78,12 @@ const CriteriaForm = ({ onSubmit }) => {
                 name={`ingredients[${i}].amount`}
                 control={control}
                 defaultValue={amount}
-                rules={{ required: true }}
+                rules={{
+                  required: isOptionalRequired(
+                    getValues(`ingredients[${i}].amount`),
+                    getValues(`ingredients[${i}].unit`)
+                  ),
+                }}
                 render={({ field }) => (
                   <TextField
                     label={`Amount${
@@ -123,8 +121,10 @@ const CriteriaForm = ({ onSubmit }) => {
                 control={control}
                 defaultValue={unit}
                 rules={{
-                  required: true,
-                  pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  required: isOptionalRequired(
+                    getValues(`ingredients[${i}].amount`),
+                    getValues(`ingredients[${i}].unit`)
+                  ),
                 }}
                 render={({ field }) => (
                   <TextField
