@@ -44,15 +44,7 @@ const RecipeListView = () => {
 
   const onSubmit = async (data) => {
     let formData = new FormData();
-    const fileArray = Array.from(data);
-    for (var key in fileArray) {
-      formData.append(`formData`, fileArray[key]);
-    }
-
-    // _.forEach(data, (file, i) => {
-    //   formData.append(`files`, file);
-    // });
-    console.log(formData);
+    formData.append("file", data.files[0]);
     await postRecipes(formData);
   };
 
@@ -81,7 +73,7 @@ const RecipeListView = () => {
           {
             type: "jsx",
             content: (
-              <form>
+              <form encType="multipart/form-data">
                 <Controller
                   name="files"
                   control={control}
@@ -89,11 +81,8 @@ const RecipeListView = () => {
                     <Input
                       type="file"
                       name="recipe_img"
-                      onChange={(e) =>
-                        setValue(`files`, e.target.files, {
-                          shouldValidate: true,
-                        })
-                      }
+                      value={undefined}
+                      onChange={(e) => setValue(`files`, e.target.files)}
                       encType="multipart/form-data"
                     />
                   )}

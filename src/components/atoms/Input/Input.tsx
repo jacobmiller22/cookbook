@@ -6,7 +6,7 @@ interface InputProps {
 }
 
 const CustomInput = ({ type, ...rest }: InputProps): JSX.Element => {
-  return <Input type={type} {...rest} name="recipe_img"></Input>;
+  return <Input type={type} name="recipe_img" {...rest}></Input>;
 };
 
 export default CustomInput;

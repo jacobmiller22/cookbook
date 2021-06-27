@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { IncomingForm } from "formidable";
 import micro from "micro";
 import { promises as fs } from "fs";
+import { heic2Jpeg } from "../../../utils/image/convert";
+import { annotate } from "../../../services/google/vision";
 
 // Extend the NextApiRequest to add our desired values on to the the query object
 interface RecipeApiReq extends NextApiRequest {
@@ -10,9 +12,16 @@ interface RecipeApiReq extends NextApiRequest {
   };
 }
 
+interface RecipeData {
+  fields: Object;
+  files: {
+    [file: string]: File;
+  };
+}
+
 /**
  *
- * the api/v1/recipes route will return all recipes that match the given parameters
+ *
  *
  * @param req
  * @param res
@@ -30,6 +39,11 @@ const recipes = async (req: RecipeApiReq, res: NextApiResponse) => {
 
 export default micro(recipes);
 
+/**
+ * the api/v1/recipes GET route will return all recipes that match the given parameters
+ * @param req
+ * @param res
+ */
 const getRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
   // Verify valid client project
 
@@ -47,12 +61,10 @@ const getRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
 };
 
 const postRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
-  // const data: FormData = req.body;
-  // console.log(req);
-  const data = await new Promise(function (resolve, reject) {
+  const data: RecipeData = await new Promise(function (resolve, reject) {
     const form = new IncomingForm({
       keepExtensions: true,
-      uploadDir: "./data",
+      uploadDir: "./data/uploads",
     });
 
     form.parse(req, function (err, fields, files) {
@@ -61,7 +73,10 @@ const postRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
     });
   });
 
-  console.log(data.files);
+  // We have a reference our recipe data files.
+  console.log(data.files.file);
+  // Convert the file format into a format readable by Google Vison API
+  const newpath = await heic2Jpeg(data.files.file.path);
 
   // const contents = await fs.readFile(data?.files?.nameOfTheInput.path, {
   //   encoding: "utf8",
