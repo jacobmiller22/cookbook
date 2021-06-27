@@ -1,14 +1,14 @@
 import axios from "axios";
 import { getAuthorization } from "apis";
-import { RecipeParams } from "interfaces/recipes";
 
-const getRecipes = async (params: RecipeParams) => {
+const postRecipes = async (data: FormData) => {
+  console.log("data", data);
   try {
-    const res = await axios.get("/api/v1/recipes", {
+    const res = await axios.post("/api/v1/recipes", data, {
       headers: {
         Authorization: getAuthorization(),
+        ["Content-Type"]: "multipart/form-data",
       },
-      params: { ingredients: JSON.stringify(params) },
     });
     return { data: res.data };
   } catch (err) {
@@ -16,4 +16,4 @@ const getRecipes = async (params: RecipeParams) => {
   }
 };
 
-export default getRecipes;
+export default postRecipes;

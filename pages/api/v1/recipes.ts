@@ -1,4 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { IncomingForm } from "formidable";
+import micro from "micro";
+import { promises as fs } from "fs";
 
 // Extend the NextApiRequest to add our desired values on to the the query object
 interface RecipeApiReq extends NextApiRequest {
@@ -15,6 +18,19 @@ interface RecipeApiReq extends NextApiRequest {
  * @param res
  */
 const recipes = async (req: RecipeApiReq, res: NextApiResponse) => {
+  switch (req.method) {
+    case "GET":
+      return getRecipes(req, res);
+    case "POST":
+      return postRecipes(req, res);
+    default:
+      res.json({ message: "Hello Everyone!" });
+  }
+};
+
+export default micro(recipes);
+
+const getRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
   // Verify valid client project
 
   // Check if caller is a authorized user.
@@ -30,4 +46,38 @@ const recipes = async (req: RecipeApiReq, res: NextApiResponse) => {
   res.json({ message: "Hello Everyone!" });
 };
 
-export default recipes;
+const postRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
+  // const data: FormData = req.body;
+  // console.log(req);
+  const data = await new Promise(function (resolve, reject) {
+    const form = new IncomingForm({
+      keepExtensions: true,
+      uploadDir: "./data",
+    });
+
+    form.parse(req, function (err, fields, files) {
+      if (err) return reject(err);
+      resolve({ fields, files });
+    });
+  });
+
+  console.log(data.files);
+
+  // const contents = await fs.readFile(data?.files?.nameOfTheInput.path, {
+  //   encoding: "utf8",
+  // });
+
+  // console.log(await runMiddleware(req, res, uploadArray));
+
+  // console.log(data.entries());
+  //
+  // console.log(multer);
+
+  res.send("tset");
+};
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};

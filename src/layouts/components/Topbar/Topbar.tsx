@@ -103,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     zIndex: 999,
+    //@ts-ignore
     maxWidth: theme.layout.contentWidth,
     width: "100%",
     margin: "0 auto",
