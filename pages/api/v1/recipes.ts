@@ -2,8 +2,13 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { IncomingForm } from "formidable";
 import micro from "micro";
 import { promises as fs } from "fs";
-import { heic2Jpeg } from "../../../utils/image/convert";
+import convert, { SUPPORTED_CONVERSIONS } from "../../../utils/image/convert";
 import { annotate } from "../../../services/google/vision";
+import { G_VISION_ANNOTATE_ALLOWED_FILE_TYPES } from "../../../utils/google/consts";
+import getType from "../../../utils/image/type";
+import _ from "lodash";
+import mongoose from "mongoose";
+require("../../../services/mongoose/init");
 
 // Extend the NextApiRequest to add our desired values on to the the query object
 interface RecipeApiReq extends NextApiRequest {
@@ -51,13 +56,19 @@ const getRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
   // If caller is a user. Log the api call in the users history
 
   // Get the list of recipes
-  console.log(req.query);
-  const { ingredients } = JSON.parse(req.query.ingredients);
+  // console.log(req.query);
+  // console.log(req.query.ingredients);
+  const { ingredients } = JSON.parse(
+    req.query.ingredients ?? '{"ingredients": "null"}'
+  );
+  // console.log("ingredients", ingredients);
 
-  console.log("ingredients", ingredients);
+  const Recipe = mongoose.model("recipes");
+
+  const recipes = await Recipe.find();
 
   // Rest of the API logic
-  res.json({ message: "Hello Everyone!" });
+  res.json({ recipes });
 };
 
 const postRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
@@ -74,10 +85,24 @@ const postRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
   });
 
   // We have a reference our recipe data files.
-  console.log(data.files.file);
-  // Convert the file format into a format readable by Google Vison API
-  const newpath = await heic2Jpeg(data.files.file.path);
+  //@ts-expect-error
+  let path = data.files.file.path;
 
+  // Get the file's mimetype
+  const filetype = await getType(path);
+
+  if (
+    _.find(
+      G_VISION_ANNOTATE_ALLOWED_FILE_TYPES,
+      (mime) => mime === filetype.mime
+    ) == null
+  ) {
+    // If the provided file does not comply with our expectations. Attempt to convert it to an accepted file type
+    const targetMime = SUPPORTED_CONVERSIONS[filetype.mime];
+    path = await convert({ from: filetype.mime, to: targetMime, path });
+  }
+
+  await annotate(path);
   // const contents = await fs.readFile(data?.files?.nameOfTheInput.path, {
   //   encoding: "utf8",
   // });

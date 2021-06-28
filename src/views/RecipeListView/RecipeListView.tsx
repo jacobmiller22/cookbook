@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { postRecipes } from "apis";
 import _ from "lodash";
+import useSWR, { SWRResponse } from "swr";
+import axios, { AxiosResponse } from "axios";
 
 import {
   List,
@@ -22,6 +24,10 @@ import { Recipes } from "./components";
 import { Input } from "components/atoms";
 import { Dialog } from "components/molecules";
 
+type RecipeData = {
+  recipes: string[];
+};
+
 const initialDialog = {
   open: false,
   title: null,
@@ -34,9 +40,17 @@ const initialFileList: FormData = null;
 const RecipeListView = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [dialog, setDialog] = useState(initialDialog);
-  const [selectedFiles, setSelectedFiles] = useState(initialFileList);
+  // const [selectedFiles, setSelectedFiles] = useState(initialFileList);
   const classes = useStyles();
   const { handleSubmit, control, setValue } = useForm();
+
+  const fetcher = (url) => axios.get(url).then((res) => res);
+  var {
+    data,
+  }: SWRResponse<AxiosResponse<RecipeData>, any> = useSWR(
+    `/api/v1/recipes`,
+    fetcher
+  );
 
   const handleAddMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -135,7 +149,7 @@ const RecipeListView = () => {
         </Menu>
       </Grid>
       <Grid item xs={12}>
-        <Recipes recipes={["1", "", ""]} />
+        <Recipes recipes={data?.data?.recipes} />
       </Grid>
     </Grid>
   );
