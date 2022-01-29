@@ -12,10 +12,7 @@ import {
 interface props {
   open: boolean;
   title: string;
-  content: {
-    type: string;
-    content: string | JSX.Element;
-  };
+  content?: any[];
   actions?: JSX.Element[];
   [rest: string]: any;
 }

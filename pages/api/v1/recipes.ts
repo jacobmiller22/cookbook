@@ -7,8 +7,8 @@ import { annotate } from "../../../services/google/vision";
 import { G_VISION_ANNOTATE_ALLOWED_FILE_TYPES } from "../../../utils/google/consts";
 import getType from "../../../utils/image/type";
 import _ from "lodash";
-import mongoose from "mongoose";
-require("../../../services/mongoose/init");
+import Recipe from "../../../models/Recipe";
+import connect from "../../../middlewares/mongodb/connect";
 
 // Extend the NextApiRequest to add our desired values on to the the query object
 interface RecipeApiReq extends NextApiRequest {
@@ -26,8 +26,6 @@ interface RecipeData {
 
 /**
  *
- *
- *
  * @param req
  * @param res
  */
@@ -42,7 +40,7 @@ const recipes = async (req: RecipeApiReq, res: NextApiResponse) => {
   }
 };
 
-export default micro(recipes);
+export default micro(connect(recipes));
 
 /**
  * the api/v1/recipes GET route will return all recipes that match the given parameters
@@ -52,6 +50,7 @@ export default micro(recipes);
 const getRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
   // Verify valid client project
 
+  // await run(req, res, connect);
   // Check if caller is a authorized user.
   // If caller is a user. Log the api call in the users history
 
@@ -62,8 +61,6 @@ const getRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
     req.query.ingredients ?? '{"ingredients": "null"}'
   );
   // console.log("ingredients", ingredients);
-
-  const Recipe = mongoose.model("recipes");
 
   const recipes = await Recipe.find();
 

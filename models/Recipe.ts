@@ -12,4 +12,8 @@ const recipeSchema = new Schema({
   nutrition: String,
 });
 
-mongoose.model("recipes", recipeSchema);
+//@ts-expect-error
+mongoose.models = {};
+const Recipe = mongoose.model("recipes", recipeSchema);
+
+export default Recipe;

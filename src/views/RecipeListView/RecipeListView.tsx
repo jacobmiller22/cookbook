@@ -9,16 +9,19 @@ import {
   List,
   ListItem,
   Grid,
-  ButtonGroup,
   Button,
   Menu,
   MenuItem,
   ListItemIcon,
   ListItemText,
+  Toolbar,
+  AppBar,
+  LinearProgress,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import CameraAlt from "@material-ui/icons/CameraAlt";
 
 import { Recipes } from "./components";
 import { Input } from "components/atoms";
@@ -28,7 +31,16 @@ type RecipeData = {
   recipes: string[];
 };
 
-const initialDialog = {
+interface dialogOptions {
+  type: string;
+  open: boolean;
+  title?: string;
+  actions?: JSX.Element[];
+  content?: any[];
+}
+
+const initialDialog: dialogOptions = {
+  type: "upload",
   open: false,
   title: null,
   actions: null,
@@ -101,30 +113,47 @@ const RecipeListView = () => {
                     />
                   )}
                 />
-                {/* <button type="submit">Submit</button> */}
               </form>
             ),
           },
         ];
-        setDialog({ open: true, title: "Upload a Recipe", actions, content });
+        setDialog({
+          type: "upload",
+          open: true,
+          title: "Upload a Recipe",
+          actions,
+          content,
+        });
         break;
       default:
         break;
     }
   };
 
+  const renderDialog = () => {
+    switch (dialog.type) {
+      default:
+        return (
+          <Dialog
+            open={dialog.open}
+            title={dialog.title}
+            actions={dialog.actions}
+            content={dialog.content}
+            maxWidth="lg"
+            onBackdropClick={() => setDialog({ ...initialDialog })}
+          />
+        );
+    }
+  };
+
+  const renderLoading = ({ show }: { show: boolean }) =>
+    show ? <LinearProgress /> : null;
+
   return (
     <Grid container>
-      <Dialog
-        open={dialog.open}
-        title={dialog.title}
-        actions={dialog.actions}
-        content={dialog.content}
-        maxWidth="lg"
-        onBackdropClick={() => setDialog({ ...initialDialog })}
-      />
+      {renderDialog()}
       <Grid item xs={12}>
-        <div className={classes.horizontal}>
+        <Toolbar variant="dense">
           <div className={classes.flexGrow}></div>
           <Button
             variant="contained"
@@ -133,7 +162,8 @@ const RecipeListView = () => {
           >
             Add
           </Button>
-        </div>
+        </Toolbar>
+        {renderLoading({ show: false })}
         <Menu
           keepMounted
           anchorEl={anchorEl}
@@ -145,6 +175,12 @@ const RecipeListView = () => {
               <CloudUploadIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary="Upload" />
+          </MenuItem>
+          <MenuItem onClick={handleAdd} component="label" data-value="camera">
+            <ListItemIcon>
+              <CameraAlt fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Camera" />
           </MenuItem>
         </Menu>
       </Grid>
