@@ -1,0 +1,34 @@
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Recipe {
+  id    Int @default(autoincrement()) @id
+  name   String
+  ingredients Ingredient[] @relation()
+  instructions String
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId   Int
+  published Boolean @default(false)
+}
+
+model Ingredient {
+  id    Int @id
+  name   String
+  recipes Recipe[] @relation()
+}
+
+model User {
+  id   Int @default(autoincrement()) @id
+  name   String
+  email String @unique
+  joinedAt DateTime @default(now())
+
+  recipes Recipe[]
+  @@map(name: "Users") 
+}
