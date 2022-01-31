@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { postRecipes } from "apis";
+import { postRecipes } from "lib/recipes";
 import _ from "lodash";
 import useSWR, { SWRResponse } from "swr";
 import axios, { AxiosResponse } from "axios";
@@ -17,15 +17,14 @@ import {
   Toolbar,
   AppBar,
   LinearProgress,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import CameraAlt from "@material-ui/icons/CameraAlt";
+} from "@mui/material";
+
+import AddIcon from "@mui/icons-material/Add";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import CameraAlt from "@mui/icons-material/CameraAlt";
 
 import { Recipes } from "./components";
-import { Input } from "components/atoms";
-import { Dialog } from "components/molecules";
+import { Input, Dialog } from "components/Atomics";
 
 type RecipeData = {
   recipes: string[];
@@ -53,7 +52,7 @@ const RecipeListView = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [dialog, setDialog] = useState(initialDialog);
   // const [selectedFiles, setSelectedFiles] = useState(initialFileList);
-  const classes = useStyles();
+
   const { handleSubmit, control, setValue } = useForm();
 
   const fetcher = (url) => axios.get(url).then((res) => res);
@@ -154,7 +153,7 @@ const RecipeListView = () => {
       {renderDialog()}
       <Grid item xs={12}>
         <Toolbar variant="dense">
-          <div className={classes.flexGrow}></div>
+          <div></div>
           <Button
             variant="contained"
             endIcon={<AddIcon />}
@@ -192,20 +191,3 @@ const RecipeListView = () => {
 };
 
 export default RecipeListView;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    width: "100vw",
-    height: "100vh",
-    // flexDirection: "column",
-    justifyContent: "center",
-  },
-  flexGrow: {
-    flexGrow: 1,
-  },
-  horizontal: {
-    display: "flex",
-    flexDirection: "row",
-  },
-}));

@@ -1,4 +1,4 @@
-import { Dialog } from "components/molecules";
+import { Dialog } from "components/Atomics";
 
 interface RecipeProps {
   show: boolean;

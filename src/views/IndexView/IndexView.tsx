@@ -1,25 +1,27 @@
 import Link from "next/link";
-import { getRecipes } from "apis";
+import { getRecipes } from "lib/recipes";
 import { RecipeParams } from "interfaces/recipes";
 
-import { Button, Typography, Grid, TextField, Box } from "@material-ui/core";
-import { makeStyles, mergeClasses } from "@material-ui/styles";
+import { Button, Typography, Grid, TextField, Box } from "@mui/material";
 
-import { CriteriaForm } from "components/organisms";
+import { CriteriaForm } from "components/Atomics";
 
 const IndexView = () => {
-  const classes = useStyles();
-
   const onSubmit = async (data: RecipeParams) => {
     const recipes = await getRecipes({ ...data });
     console.log(recipes);
   };
 
   return (
-    <div className={classes.root}>
+    <div>
       {/* Index View */}
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Typography variant="h4"></Typography>
+        </Grid>
+      </Grid>
       <br />
-      <Box className={classes.formContainer}>
+      <Box>
         <CriteriaForm onSubmit={onSubmit} />
       </Box>
     </div>
@@ -28,19 +30,19 @@ const IndexView = () => {
 
 export default IndexView;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    width: "100vw",
-    height: "100vh",
-    // flexDirection: "column",
-    justifyContent: "center",
-  },
-  formContainer: {
-    display: "flex",
-    maxWidth: "65vw",
-    width: "100%",
-    justifyContent: "center",
-    margin: "25px",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     display: "flex",
+//     width: "100vw",
+//     height: "100vh",
+//     // flexDirection: "column",
+//     justifyContent: "center",
+//   },
+//   formContainer: {
+//     display: "flex",
+//     maxWidth: "65vw",
+//     width: "100%",
+//     justifyContent: "center",
+//     margin: "25px",
+//   },
+// }));

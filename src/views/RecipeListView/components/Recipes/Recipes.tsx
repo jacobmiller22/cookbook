@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { List, ListItem } from "@material-ui/core";
+import { List, ListItem } from "@mui/material";
 
 const Recipes = ({ recipes }) => {
   const renderList = () => {

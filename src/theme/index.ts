@@ -1,17 +1,13 @@
-import {
-  createMuiTheme,
-  PaletteType,
-  responsiveFontSizes,
-} from "@material-ui/core";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { light } from "./palette"; // Can look into dark mode later
 
-const getTheme = (mode) =>
+const getTheme = () =>
   responsiveFontSizes(
-    createMuiTheme({
+    createTheme({
       palette: light,
-      layout: {
-        contentWidth: 1236,
-      },
+      // layout: {
+      //   contentWidth: 1236,
+      // },
       typography: {
         fontFamily: "Lato",
       },
