@@ -1,14 +1,16 @@
 import axios from "axios";
 import { getAuthorization } from "lib/auth";
-import { RecipeParams } from "interfaces/recipes";
+import { RecipeParams } from "interfaces/Recipe";
 
 export const getRecipes = async (params: RecipeParams) => {
+  const { ingredients, name } = params;
+
   try {
     const res = await axios.get("/api/v1/recipes", {
       headers: {
         Authorization: getAuthorization(),
       },
-      params: { ingredients: JSON.stringify(params) },
+      params: { ingredients: JSON.stringify(ingredients), name },
     });
     return { data: res.data };
   } catch (err) {

@@ -5,3 +5,5 @@ export { default as Query } from "./Query";
 export { default as CriteriaForm } from "./CriteriaForm";
 export { default as Dialog } from "./Dialog";
 export { default as Input } from "./Input";
+export { default as Modal } from "./Modal";
+export { default as SingleIngredientForm } from "./SingleIngredientForm";

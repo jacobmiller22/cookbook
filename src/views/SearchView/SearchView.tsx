@@ -1,17 +1,33 @@
 import useSWR from "swr";
+import { useState, useEffect } from "react";
+import axios from "axios";
 /** Interfaces/types */
 
 import { Divider, Grid, Typography } from "@mui/material";
 import { CriteriaForm } from "components/Atomics";
-import { Recipe } from "interfaces/Recipe";
+import { QuantifiedIngredient, Recipe } from "interfaces/Recipe";
 import { RecipeList } from "./components";
+import IngredientPanel from "./components/IngredientPanel";
+import { getRecipes } from "lib/recipes";
 
 /** components */
 
 interface ISearchViewProps {}
 
 const SearchView = ({}: ISearchViewProps) => {
-  const onSubmit = (vals) => console.log(vals);
+  const [ingredients, setIngredients] = useState<QuantifiedIngredient[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>(trecipes);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      // const { data } = await axios.get("/api/recipes");
+      const newRecipes = await getRecipes({ ingredients });
+      console.log(newRecipes);
+      setRecipes(newRecipes.data);
+      setIsLoading(false);
+    })();
+  }, [ingredients]);
 
   return (
     <Grid container spacing={3} sx={{ margin: "auto" }}>
@@ -26,10 +42,13 @@ const SearchView = ({}: ISearchViewProps) => {
 
       <Grid item xs={12} container flexDirection="row">
         <Grid item xs={12} md={5}>
-          <CriteriaForm onSubmit={onSubmit} />
+          <IngredientPanel
+            ingredients={ingredients}
+            setIngredients={setIngredients}
+          />
         </Grid>
         <Grid item xs={12} md={7}>
-          <RecipeList recipes={recipes} />
+          <RecipeList recipes={recipes} isLoading={isLoading} />
         </Grid>
       </Grid>
     </Grid>
@@ -38,7 +57,7 @@ const SearchView = ({}: ISearchViewProps) => {
 
 export default SearchView;
 
-const recipes: Recipe[] = [
+const trecipes: Recipe[] = [
   {
     id: 1,
     name: "Pulled Pork BBQ",
@@ -81,4 +100,15 @@ const recipes: Recipe[] = [
     description:
       "Authentic, simple, and delicious. This is the best pasta sauce you can make.",
   },
+];
+
+const tempIngredients: QuantifiedIngredient[] = [
+  { name: "apple cider vinegar", amount: 0.5, unit: "cup" },
+  { name: "chicken broth", amount: 0.5, unit: "cup" },
+  { name: "vegetable oil", amount: 1, unit: "teaspoon" },
+  { name: "pork tenderloin", amount: 2, unit: "" },
+  { name: "barbeque sauce", amount: 1, unit: "cup" },
+  { name: "light brown sugar", amount: 0.25, unit: "cup" },
+  { name: "yellow mustard", amount: 1, unit: "tablespoon" },
+  { name: "worcestershire sauce", amount: 1, unit: "tablespoon" },
 ];

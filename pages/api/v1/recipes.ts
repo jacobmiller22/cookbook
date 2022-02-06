@@ -7,13 +7,19 @@ import { annotate } from "../../../services/google/vision";
 import { G_VISION_ANNOTATE_ALLOWED_FILE_TYPES } from "../../../utils/google/consts";
 import getType from "../../../utils/image/type";
 import _ from "lodash";
-import Recipe from "../../../models/Recipe";
-import connect from "../../../middlewares/mongodb/connect";
+// import Recipe from "../../../models/Recipe";
+
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+// import connect from "../../../middlewares/mongodb/connect";
 
 // Extend the NextApiRequest to add our desired values on to the the query object
 interface RecipeApiReq extends NextApiRequest {
   query: NextApiRequest["query"] & {
     ingredients?: string;
+    name?: string;
   };
 }
 
@@ -29,10 +35,17 @@ interface RecipeData {
  * @param req
  * @param res
  */
-const recipes = async (req: RecipeApiReq, res: NextApiResponse) => {
+const RecipesAPI = async (req: RecipeApiReq, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
-      return getRecipes(req, res);
+      const response = await getRecipes(req, res);
+      console.log("response", response);
+      if (response.error) {
+        res.status(500).send(response.error);
+        return;
+      }
+      res.status(200).send(response.data);
+      return;
     case "POST":
       return postRecipes(req, res);
     default:
@@ -40,7 +53,9 @@ const recipes = async (req: RecipeApiReq, res: NextApiResponse) => {
   }
 };
 
-export default micro(connect(recipes));
+export default RecipesAPI;
+
+// export default micro(connect(recipes));
 
 /**
  * the api/v1/recipes GET route will return all recipes that match the given parameters
@@ -48,24 +63,23 @@ export default micro(connect(recipes));
  * @param res
  */
 const getRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
-  // Verify valid client project
+  const { ingredients, name } = req.query;
 
-  // await run(req, res, connect);
-  // Check if caller is a authorized user.
-  // If caller is a user. Log the api call in the users history
+  try {
+    const recipes = await prisma.recipe.findMany({
+      where: {
+        name: {
+          contains: "pork",
+        },
+      },
+    });
 
-  // Get the list of recipes
-  // console.log(req.query);
-  // console.log(req.query.ingredients);
-  const { ingredients } = JSON.parse(
-    req.query.ingredients ?? '{"ingredients": "null"}'
-  );
-  // console.log("ingredients", ingredients);
+    console.log("getRecipes", recipes);
 
-  const recipes = await Recipe.find();
-
-  // Rest of the API logic
-  res.json({ recipes });
+    return { data: recipes };
+  } catch (err) {
+    return { error: `Error: ${err.toString()}` };
+  }
 };
 
 const postRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {

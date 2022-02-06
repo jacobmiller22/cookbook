@@ -17,6 +17,12 @@ model Recipe {
   author    User?   @relation(fields: [authorId], references: [id])
   authorId   Int
   published Boolean @default(false)
+
+  prepTime String
+  cookTime String
+  servings Int
+  description String
+
 }
 
 model Ingredient {

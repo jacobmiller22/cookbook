@@ -1,5 +1,6 @@
 export interface RecipeParams {
-  ingredients: QuantifiedIngredient[];
+  ingredients?: QuantifiedIngredient[] | undefined;
+  name?: string | undefined;
 }
 
 export type Recipe = {

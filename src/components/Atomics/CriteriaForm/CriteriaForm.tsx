@@ -41,7 +41,7 @@ const CriteriaForm = ({ onSubmit }) => {
             <Grid container spacing={1} key={id}>
               <Grid item xs={6}>
                 <Controller
-                  name={`ingredients[${i}].ingredient`}
+                  name={`ingredients[${i}].name`}
                   control={control}
                   defaultValue={ingredient}
                   rules={{ required: true }}
