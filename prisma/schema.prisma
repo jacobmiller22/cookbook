@@ -1,6 +1,7 @@
 datasource db {
   provider = "mysql"
   url = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
@@ -10,16 +11,16 @@ generator client {
 }
 
 model Recipe {
-  id    Int @default(autoincrement()) @id
+  id    String @id
   name   String
   ingredients Ingredient[] @relation()
   instructions String
   author    User?   @relation(fields: [authorId], references: [id])
-  authorId   Int
+  authorId   String
   published Boolean @default(false)
 
-  prepTime String
-  cookTime String
+  prepTime Int
+  cookTime Int
   servings Int
   description String
 
@@ -33,11 +34,11 @@ model Ingredient {
 }
 
 model User {
-  id   Int @default(autoincrement()) @id
+  id   String @id
   name   String
   email String @unique
   joinedAt DateTime @default(now())
 
   recipes Recipe[]
-  @@map(name: "Users") 
+  // @@map(name: "User") 
 }
