@@ -18,6 +18,7 @@ import {
   CardActionArea,
   Skeleton,
 } from "@mui/material";
+import { formatSeconds } from "lib/time";
 
 interface IRecipeListProps {
   recipes: Recipe[];
@@ -27,23 +28,23 @@ interface IRecipeListProps {
 const RecipeList = ({ recipes = [], isLoading }: IRecipeListProps) => {
   const renderRecipes = () => {
     if (isLoading) {
-      return _.times(3, () => (
-        <ListItem>
+      return _.times(3, (i: number) => (
+        <ListItem key={`recipe-skeleton-item-${i}`} sx={{ padding: 0 }}>
           <SkeletonRecipeItem />
         </ListItem>
       ));
     }
 
-    return _.map(recipes, (recipe: Recipe) => {
+    return _.map(recipes, (recipe: Recipe, i: number) => {
       return (
-        <ListItem>
+        <ListItem key={`recipe-list-item-${i}`} sx={{ padding: 0 }}>
           <RecipeItem recipe={recipe} />
         </ListItem>
       );
     });
   };
 
-  return <List>{renderRecipes()}</List>;
+  return <List sx={{ padding: 0 }}>{renderRecipes()}</List>;
 };
 
 export default RecipeList;
@@ -51,16 +52,39 @@ export default RecipeList;
 const RecipeItem = ({ recipe }: { recipe: Recipe }) => {
   return (
     <Card variant="outlined" sx={{ width: "100%" }}>
-      <CardActionArea>
+      <CardActionArea component="div">
         <CardContent>
           <Typography variant="body2" color="text.secondary" gutterBottom>
             {recipe.author}
           </Typography>
           <Typography variant="h6">{recipe.name}</Typography>
           <Box sx={{ mb: 2 }}>
-            <Chip label={`Serves ${recipe.servings}`} sx={{ mr: "0.5rem" }} />
-            <Chip label={`${recipe.prepTime} Prep`} sx={{ mr: "0.5rem" }} />
-            <Chip label={`Cooks in ${recipe.cookTime}`} sx={{ mr: "0.5rem" }} />
+            <Chip
+              variant="outlined"
+              color="secondary"
+              label={<strong>{`Serves ${recipe.servings}`}</strong>}
+              sx={{ mr: "0.5rem" }}
+            />
+            <Chip
+              variant="outlined"
+              color="secondary"
+              label={
+                <strong>{`${formatSeconds(parseInt(recipe.prepTime), {
+                  compact: true,
+                })} Prep`}</strong>
+              }
+              sx={{ mr: "0.5rem" }}
+            />
+            <Chip
+              variant="outlined"
+              color="secondary"
+              label={
+                <strong>{`Cooks in ${formatSeconds(parseInt(recipe.cookTime), {
+                  compact: true,
+                })}`}</strong>
+              }
+              sx={{ mr: "0.5rem" }}
+            />
           </Box>
           <Box>
             <Typography variant="body1">{recipe.description}</Typography>

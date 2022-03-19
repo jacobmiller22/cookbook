@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getRecipes } from "lib/recipes";
-import { RecipeParams } from "interfaces/recipes";
+import { RecipeParams } from "interfaces/Recipe";
 
 import { Button, Typography, Grid, TextField, Box } from "@mui/material";
 
@@ -9,7 +9,6 @@ import { CriteriaForm } from "components/Atomics";
 const IndexView = () => {
   const onSubmit = async (data: RecipeParams) => {
     const recipes = await getRecipes({ ...data });
-    console.log(recipes);
   };
 
   return (

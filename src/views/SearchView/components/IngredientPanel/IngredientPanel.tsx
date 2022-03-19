@@ -24,6 +24,7 @@ const IngredientPanel = ({
   ingredients = [],
   setIngredients,
 }: IIngredientPanelProps) => {
+  const [show, setShow] = useState(false);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);
@@ -53,35 +54,43 @@ const IngredientPanel = ({
           addIngredient={(ingredient) =>
             setIngredients([...selected, ingredient])
           }
-          removeSelected={(ingredient) =>
-            setSelected(selected.filter((i) => i !== ingredient))
-          }
+          removeSelected={() => {
+            setIngredients(
+              ingredients.filter(
+                (ingredient) => !selected.includes(ingredient.name)
+              )
+            );
+            setSelected([]);
+          }}
+          show={[show, setShow]}
         />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size="medium"
-          >
-            <Head
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={ingredients.length}
-              cells={columns}
-            />
+        {show && (
+          <TableContainer>
+            <Table
+              sx={{ minWidth: 750 }}
+              aria-labelledby="tableTitle"
+              size="medium"
+            >
+              <Head
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={ingredients.length}
+                cells={columns}
+              />
 
-            <Body
-              rows={ingredients}
-              order={order}
-              orderBy={orderBy}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          </Table>
-        </TableContainer>
+              <Body
+                rows={ingredients}
+                order={order}
+                orderBy={orderBy}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </Table>
+          </TableContainer>
+        )}
         {/* <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"

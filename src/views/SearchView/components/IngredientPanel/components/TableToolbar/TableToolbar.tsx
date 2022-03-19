@@ -9,6 +9,7 @@ import {
   Typography,
   FormControlLabel,
   FormControl,
+  Button,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -21,16 +22,17 @@ interface ITableToolbarProps {
   numSelected: number;
   addIngredient: (ingredient: any) => void;
   removeSelected: (ingredient: any) => void;
+  show: [show: boolean, setShow: (value: boolean) => void];
 }
 
 const TableToolbar = ({
   numSelected,
   addIngredient,
   removeSelected,
+  show,
 }: ITableToolbarProps) => {
   const [modal, dispatch] = useModal();
 
-  console.log(modal);
   const handleAddIconClick = () => {
     dispatch({
       type: MODAL_VARIANT.FORM,
@@ -57,7 +59,7 @@ const TableToolbar = ({
         </Typography>
         <Tooltip title="Delete Ingredient">
           <IconButton>
-            <DeleteIcon />
+            <DeleteIcon onClick={removeSelected} />
           </IconButton>
         </Tooltip>
       </>
@@ -109,6 +111,11 @@ const TableToolbar = ({
       }}
     >
       {numSelected > 0 ? renderWithSelected() : renderWithoutSelected()}
+      <Tooltip title={show[0] ? "Hide filter" : "Show filter"}>
+        <Button onClick={() => show[1](!show[0])}>
+          {show[0] ? "Hide" : "Filter"}
+        </Button>
+      </Tooltip>
     </Toolbar>
   );
 };

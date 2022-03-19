@@ -19,7 +19,6 @@ const Modal = ({}: IModalProps) => {
   const [modal, dispatch] = useModal();
 
   const renderDialogTitle = () => {
-    console.log(modal);
     switch (modal.type) {
       case MODAL_VARIANT.FORM:
         return (

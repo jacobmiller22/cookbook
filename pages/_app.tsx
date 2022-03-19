@@ -1,13 +1,18 @@
 import type { AppProps } from "next/app";
 import { ModalProvider } from "contexts";
 import { Modal } from "components/Atomics";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import theme from "theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ModalProvider>
-      <Modal />
-      <Component {...pageProps} />;
-    </ModalProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ModalProvider>
+        <Modal />
+        <Component {...pageProps} />;
+      </ModalProvider>
+    </ThemeProvider>
   );
 }
 export default MyApp;

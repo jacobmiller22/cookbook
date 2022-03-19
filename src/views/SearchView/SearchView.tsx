@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 /** Interfaces/types */
 
-import { Divider, Grid, Typography } from "@mui/material";
-import { CriteriaForm } from "components/Atomics";
+import { Button, Divider, Grid, Typography } from "@mui/material";
 import { QuantifiedIngredient, Recipe } from "interfaces/Recipe";
 import { RecipeList } from "./components";
 import IngredientPanel from "./components/IngredientPanel";
@@ -16,38 +15,54 @@ interface ISearchViewProps {}
 
 const SearchView = ({}: ISearchViewProps) => {
   const [ingredients, setIngredients] = useState<QuantifiedIngredient[]>([]);
-  const [recipes, setRecipes] = useState<Recipe[]>(trecipes);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      // const { data } = await axios.get("/api/recipes");
       const newRecipes = await getRecipes({ ingredients });
-      console.log(newRecipes);
       setRecipes(newRecipes.data);
       setIsLoading(false);
     })();
   }, [ingredients]);
 
   return (
-    <Grid container spacing={3} sx={{ margin: "auto" }}>
-      <Grid item xs={12} container justifyContent="center">
-        <Typography variant="h4">Search your Recipes</Typography>
-      </Grid>
-      <Grid item xs={12} container justifyContent="center">
-        <Typography variant="body1">
-          Enter ingredients, search for recipes that include your ingredients.
-        </Typography>
+    <Grid container spacing={3} sx={{ margin: "auto" }} justifyContent="center">
+      <Grid
+        item
+        xs={12}
+        container
+        sx={{
+          padding: "5rem 0",
+          marginBottom: "-4rem",
+          backgroundColor: (theme) => theme.palette.primary.main,
+        }}
+      >
+        <Grid item xs={12} container justifyContent="flex-start">
+          <Button variant="contained" color="info">
+            Add Recipe
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Divider variant="middle" />
+        </Grid>
       </Grid>
 
-      <Grid item xs={12} container flexDirection="row">
-        <Grid item xs={12} md={5}>
+      <Grid
+        item
+        xs={12}
+        container
+        flexDirection="row"
+        justifyContent="center"
+        sx={{ maxWidth: "1000px !important" }}
+      >
+        <Grid item xs={12}>
           <IngredientPanel
             ingredients={ingredients}
             setIngredients={setIngredients}
           />
         </Grid>
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12}>
           <RecipeList recipes={recipes} isLoading={isLoading} />
         </Grid>
       </Grid>

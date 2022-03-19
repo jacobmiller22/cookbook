@@ -18,8 +18,8 @@ export const MONTHS = [
 ];
 
 export const DEFAULT_TOPBAR_ITEMS = [
-  { label: "Search", url: "/search" },
-  { label: "Recipes", url: "/recipes" },
+  // { label: "Search", url: "/search" },
+  // { label: "Recipes", url: "/recipes" },
 ];
 
 export const MAX_WIDTH = "1200px";

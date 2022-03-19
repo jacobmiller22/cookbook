@@ -27,7 +27,7 @@ const useAuth = (): IUseAuthReturn => {
 
   useEffect(() => {
     // setTimeout(Userfront.refresh(), 10000);
-    Userfront.refresh();
+    Userfront.tokens.refresh();
   }, []);
 
   // const login = async (credentials: ILogin) => {

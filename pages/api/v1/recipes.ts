@@ -39,7 +39,6 @@ const RecipesAPI = async (req: RecipeApiReq, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       const response = await getRecipes(req, res);
-      console.log("response", response);
       if (response.error) {
         res.status(500).send(response.error);
         return;
@@ -63,18 +62,26 @@ export default RecipesAPI;
  * @param res
  */
 const getRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
-  const { ingredients, name } = req.query;
+  const { ingredients: ingredientsJSON, name } = req.query;
+
+  const ingredients: string[] = JSON.parse(ingredientsJSON);
 
   try {
     const recipes = await prisma.recipe.findMany({
       where: {
         name: {
-          contains: "pork",
+          contains: name || "",
+        },
+        published: true,
+        ingredients: {
+          some: {
+            name: {
+              [_.isEmpty(ingredients) ? "notIn" : "in"]: ingredients,
+            },
+          },
         },
       },
     });
-
-    console.log("getRecipes", recipes);
 
     return { data: recipes };
   } catch (err) {

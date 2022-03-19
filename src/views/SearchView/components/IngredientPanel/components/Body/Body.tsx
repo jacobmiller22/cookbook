@@ -1,6 +1,13 @@
 /** Interfaces/types */
 
-import { Checkbox, TableBody, TableCell, TableRow } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
+} from "@mui/material";
 
 /** components */
 
@@ -72,7 +79,7 @@ const Body = ({ rows, order, orderBy, selected, setSelected }: IBodyProps) => {
             </TableRow>
           );
         })}
-      {rows.length < 8 && (
+      {/* {rows.length < 8 && (
         <TableRow
           style={{
             height: 53 * (8 - rows.length),
@@ -80,13 +87,15 @@ const Body = ({ rows, order, orderBy, selected, setSelected }: IBodyProps) => {
         >
           <TableCell colSpan={3} />
         </TableRow>
-      )}
+      )} */}
       <TableRow
         style={{
           height: 53,
         }}
       >
-        <TableCell colSpan={3}></TableCell>
+        <TableCell colSpan={4} align="center">
+          {rows.length === 0 ? "No ingredients are being filtered." : ""}
+        </TableCell>
       </TableRow>
     </TableBody>
   );
