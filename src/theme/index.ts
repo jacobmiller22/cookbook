@@ -20,9 +20,10 @@ const getTheme = () =>
 
 const theme = createTheme({
   palette: light,
-  // layout: {
-  //   contentWidth: 1236,
-  // },
+  //@ts-ignore
+  layout: {
+    contentWidth: "1000px",
+  },
   typography: {
     fontFamily: "Lato",
   },

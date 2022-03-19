@@ -33,13 +33,22 @@ const SearchView = ({}: ISearchViewProps) => {
         xs={12}
         container
         sx={{
-          padding: "5rem 0",
+          paddingInline: "0 !important",
+          paddingTop: "2rem",
+          paddingBottom: "5rem",
           marginBottom: "-4rem",
-          backgroundColor: (theme) => theme.palette.primary.main,
+          backgroundColor: (theme) => theme.palette.secondary.main,
         }}
+        justifyContent="center"
       >
-        <Grid item xs={12} container justifyContent="flex-start">
-          <Button variant="contained" color="info">
+        <Grid
+          item
+          xs={12}
+          container
+          justifyContent="flex-start"
+          sx={{ maxWidth: "1000px !important" }}
+        >
+          <Button variant="contained" color="primary">
             Add Recipe
           </Button>
         </Grid>
@@ -54,7 +63,7 @@ const SearchView = ({}: ISearchViewProps) => {
         container
         flexDirection="row"
         justifyContent="center"
-        sx={{ maxWidth: "1000px !important" }}
+        sx={{ maxWidth: "1000px !important", paddingInline: "0 !important" }}
       >
         <Grid item xs={12}>
           <IngredientPanel
