@@ -7,10 +7,19 @@ import theme from "theme";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
+      <style global jsx>{`
+        html,
+        body,
+        body > div:first-child,
+        div#__next,
+        div#__next > div {
+          height: 100%;
+        }
+      `}</style>
       <CssBaseline />
       <ModalProvider>
         <Modal />
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </ModalProvider>
     </ThemeProvider>
   );

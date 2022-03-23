@@ -20,6 +20,7 @@ const ModalProvider = ({ children }) => {
   const [modalState, dispatch] = useReducer(modalReducer, initialState);
 
   return (
+    // @ts-ignore
     <ModalCtx.Provider value={[modalState, dispatch]}>
       {children}
     </ModalCtx.Provider>
@@ -28,6 +29,7 @@ const ModalProvider = ({ children }) => {
 export default ModalProvider;
 
 export const useModal = () => {
+  // @ts-ignore
   const ctx: [IModalCtx, any] = useContext(ModalCtx);
 
   if (!ctx) {

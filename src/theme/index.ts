@@ -1,4 +1,4 @@
-import { createTheme, responsiveFontSizes } from "@mui/material";
+import { createTheme, Palette, responsiveFontSizes } from "@mui/material";
 import { light } from "./palette"; // Can look into dark mode later
 
 const getTheme = () =>
@@ -18,7 +18,22 @@ const getTheme = () =>
     })
   );
 
-const theme = createTheme({
+export type Theme = {
+  palette: Palette;
+  layout: {
+    contentWidth: string;
+  };
+  typography: {
+    fontFamily: string;
+  };
+  zIndex: {
+    appBar: number;
+    drawer: number;
+  };
+};
+
+//@ts-ignore
+const theme: Theme = createTheme({
   palette: light,
   //@ts-ignore
   layout: {

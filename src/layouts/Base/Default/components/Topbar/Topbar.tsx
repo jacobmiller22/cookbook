@@ -8,8 +8,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Hidden from "@mui/material/Hidden";
 import AuthButton from "components/Auth/AuthButton";
 import { List, ListItem } from "@mui/material";
-import { EThemeMode } from "interfaces/Theme";
-import { MAX_WIDTH } from "consts";
+
+import theme from "theme";
 
 interface ITopbarProps {
   className?: string;
@@ -22,7 +22,12 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
   return (
     <Toolbar
       className={className}
-      sx={{ maxWidth: MAX_WIDTH, margin: "auto" }}
+      sx={{
+        maxWidth: theme.layout.contentWidth,
+        margin: "auto",
+        paddingInline: "0 !important",
+        backgroundColor: theme.palette.background.paper,
+      }}
       {...rest}
     >
       <Link href="/">
@@ -44,7 +49,7 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
         }}
       >
         {items && renderItems()}
-        <ListItem sx={{ whiteSpace: "nowrap" }}>
+        <ListItem sx={{ whiteSpace: "nowrap", paddingRight: "0" }}>
           <AuthButton />
         </ListItem>
       </List>

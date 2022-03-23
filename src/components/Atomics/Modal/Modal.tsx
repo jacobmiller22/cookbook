@@ -23,6 +23,7 @@ const Modal = ({}: IModalProps) => {
       case MODAL_VARIANT.FORM:
         return (
           <DialogTitle sx={{ display: "flex" }}>
+            {/* @ts-ignore */}
             {modal.content.title}
             <div style={{ flexGrow: 1 }} />
             <IconButton onClick={handleClose}>
@@ -40,6 +41,7 @@ const Modal = ({}: IModalProps) => {
       case MODAL_VARIANT.FORM: {
         return (
           <DialogContent>
+            {/* @ts-ignore */}
             {<modal.content.body {...modal.content.bodyProps} />}
           </DialogContent>
         );

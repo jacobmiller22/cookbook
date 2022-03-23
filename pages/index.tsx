@@ -8,7 +8,10 @@ import { DEFAULT_TOPBAR_ITEMS } from "consts";
 
 const IndexPage: NextPage = () => (
   //@ts-ignore
-  <Base topbarItems={TopbarGroup({ items: DEFAULT_TOPBAR_ITEMS })}>
+  <Base
+    topbarItems={TopbarGroup({ items: DEFAULT_TOPBAR_ITEMS })}
+    divider={false}
+  >
     <SearchView />
   </Base>
 );

@@ -1,19 +1,22 @@
-import useSWR from "swr";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { newRecipeRoute } from "routes";
 /** Interfaces/types */
 
-import { Button, Divider, Grid, Typography } from "@mui/material";
-import { QuantifiedIngredient, Recipe } from "interfaces/Recipe";
-import { RecipeList } from "./components";
-import IngredientPanel from "./components/IngredientPanel";
-import { getRecipes } from "lib/recipes";
-
 /** components */
+import { Box, Button, Divider, Grid, Typography } from "@mui/material";
+import { QuantifiedIngredient, Recipe } from "interfaces/Recipe";
+import { Spacer } from "components/Atomics";
+import { RecipeList, IngredientPanel, ResultsDescriptor } from "./components";
+import { getRecipes } from "lib/recipes";
+import theme from "theme";
+import AddIcon from "@mui/icons-material/Add";
 
 interface ISearchViewProps {}
 
 const SearchView = ({}: ISearchViewProps) => {
+  const router = useRouter();
+
   const [ingredients, setIngredients] = useState<QuantifiedIngredient[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,56 +29,67 @@ const SearchView = ({}: ISearchViewProps) => {
     })();
   }, [ingredients]);
 
+  const handleAddRecipe = () => {
+    console.log("add recipe");
+    router.push(newRecipeRoute.path);
+  };
+
   return (
-    <Grid container spacing={3} sx={{ margin: "auto" }} justifyContent="center">
-      <Grid
-        item
-        xs={12}
-        container
+    <React.Fragment>
+      <Box
+        width="100%"
+        display="flex"
+        flexDirection="row"
+        justifyContent="center"
         sx={{
           paddingInline: "0 !important",
           paddingTop: "2rem",
-          paddingBottom: "5rem",
-          marginBottom: "-4rem",
+          marginBottom: "-3rem",
           backgroundColor: (theme) => theme.palette.secondary.main,
         }}
-        justifyContent="center"
       >
-        <Grid
-          item
-          xs={12}
-          container
+        <Box
+          display="flex"
           justifyContent="flex-start"
-          sx={{ maxWidth: "1000px !important" }}
+          sx={{ maxWidth: theme.layout.contentWidth, paddingBottom: "4rem" }}
+          width="100%"
+          flexDirection="row"
         >
-          <Button variant="contained" color="primary">
+          <Spacer />
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={handleAddRecipe}
+          >
             Add Recipe
           </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider variant="middle" />
-        </Grid>
-      </Grid>
-
-      <Grid
-        item
-        xs={12}
-        container
-        flexDirection="row"
+        </Box>
+      </Box>
+      <Box
+        display="flex"
+        flexDirection="column"
         justifyContent="center"
-        sx={{ maxWidth: "1000px !important", paddingInline: "0 !important" }}
+        sx={{ maxWidth: theme.layout.contentWidth }}
+        height="100%"
+        width="100%"
       >
-        <Grid item xs={12}>
+        <Box>
           <IngredientPanel
             ingredients={ingredients}
             setIngredients={setIngredients}
           />
-        </Grid>
-        <Grid item xs={12}>
+        </Box>
+        <Box display="flex" flexDirection="column" sx={{ height: "100%" }}>
           <RecipeList recipes={recipes} isLoading={isLoading} />
-        </Grid>
-      </Grid>
-    </Grid>
+          <Spacer />
+          <ResultsDescriptor
+            results={{ total: 10, displayed: 10 }}
+            justifyContent="flex-end"
+          />
+        </Box>
+      </Box>
+    </React.Fragment>
   );
 };
 

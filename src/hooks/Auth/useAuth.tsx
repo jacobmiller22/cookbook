@@ -13,7 +13,7 @@ interface ILogout {
   setStatus?: Dispatch<SetStateAction<EStatus>> | undefined;
 }
 
-interface IUseAuthReturn {
+export interface IUseAuthReturn {
   isAuthenticated: boolean;
   user: IUserfrontUser;
   login: () => void;

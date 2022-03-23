@@ -63,6 +63,7 @@ const SingleIngredientForm = ({ onComplete }: ISingleIngredientFormProps) => {
                 name="amount"
                 placeholder="Amount"
                 label="Amount"
+                //@ts-ignore
                 InputProps={{ type: "number", step: "2" }}
               />
               <FormHelperText error={errors.amount}>
