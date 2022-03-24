@@ -7,9 +7,11 @@ import getTheme from "theme";
 import Toolbar from "@mui/material/Toolbar";
 import Hidden from "@mui/material/Hidden";
 import AuthButton from "components/Auth/AuthButton";
-import { List, ListItem } from "@mui/material";
+import { List, ListItem, ListItemText } from "@mui/material";
 
 import theme from "theme";
+import useAuth from "hooks/Auth/useAuth";
+import { myRecipesRoute, profileRoute, replaceWildcards, Route } from "routes";
 
 interface ITopbarProps {
   className?: string;
@@ -18,6 +20,8 @@ interface ITopbarProps {
 }
 
 const Topbar = ({ className, items, rest }: ITopbarProps) => {
+  const { user } = useAuth();
+
   const renderItems = () => items;
   return (
     <Toolbar
@@ -48,6 +52,9 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
         }}
       >
         {items && renderItems()}
+        <RouteLink route={myRecipesRoute} replace={[user.username]} />
+        <RouteLink route={profileRoute} replace={[user.username]} />
+
         <ListItem sx={{ whiteSpace: "nowrap", paddingRight: "0" }}>
           <AuthButton />
         </ListItem>
@@ -57,3 +64,29 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
   );
 };
 export default Topbar;
+
+const RouteLink = ({ route, replace }: { route: Route; replace: string[] }) => {
+  return (
+    <Link href={replaceWildcards(route, replace)}>
+      <ListItem
+        component="a"
+        sx={{
+          "&:hover": {
+            textDecoration: "underline",
+            cursor: "pointer",
+          },
+        }}
+      >
+        <ListItemText
+          primaryTypographyProps={{
+            sx: {
+              whiteSpace: "nowrap",
+            },
+          }}
+        >
+          {route.name}
+        </ListItemText>
+      </ListItem>
+    </Link>
+  );
+};
