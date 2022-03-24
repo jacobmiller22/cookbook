@@ -43,6 +43,7 @@ export default [
   {
     name: "ingredients",
     label: "Ingredients",
+    singularLabel: "Ingredient",
     initialValue: [],
     type: FormType.ARRAY,
     helperText: "Enter ingredients",

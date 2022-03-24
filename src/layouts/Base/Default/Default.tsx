@@ -25,7 +25,7 @@ const Default = ({
   return (
     <div
       style={{
-        height: "max-content",
+        height: "inherit",
       }}
     >
       <div
@@ -46,7 +46,7 @@ const Default = ({
         }}
       >
         <Box
-          height="100%"
+          height="max-content"
           width="100%"
           display="flex"
           flexDirection="column"

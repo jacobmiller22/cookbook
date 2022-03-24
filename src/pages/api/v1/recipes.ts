@@ -1,19 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { IncomingForm } from "formidable";
-import micro from "micro";
-import { promises as fs } from "fs";
-import convert, { SUPPORTED_CONVERSIONS } from "../../../utils/image/convert";
-import { annotate } from "../../../services/google/vision";
-import { G_VISION_ANNOTATE_ALLOWED_FILE_TYPES } from "../../../utils/google/consts";
-import getType from "../../../utils/image/type";
+
+import convert, { SUPPORTED_CONVERSIONS } from "utils/image/convert";
+import { annotate } from "services/google/vision";
+import { G_VISION_ANNOTATE_ALLOWED_FILE_TYPES } from "utils/google/consts";
+import getType from "utils/image/type";
 import _ from "lodash";
-// import Recipe from "../../../models/Recipe";
 
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-
-// import connect from "../../../middlewares/mongodb/connect";
 
 // Extend the NextApiRequest to add our desired values on to the the query object
 interface RecipeApiReq extends NextApiRequest {

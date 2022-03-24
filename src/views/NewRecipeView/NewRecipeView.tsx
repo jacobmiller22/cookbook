@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 /** Interfaces/types */
 
 /** components */
@@ -5,10 +7,23 @@ import { Box, Divider, Typography } from "@mui/material";
 import { BackButton, BasicForm } from "components/Atomics";
 import fields from "./fields";
 import fieldsSchema from "./schema";
+import { myRecipesRoute, replaceWildcards } from "routes";
+import useAuth from "hooks/Auth/useAuth";
 
 interface INewRecipeViewProps {}
 
 const NewRecipeView = ({}: INewRecipeViewProps) => {
+  const router = useRouter();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    // We will want to direct the user to their recipes page upon submission
+    // To more smoothly transition between pages, we prefetch the my recipes page
+    const url = replaceWildcards(myRecipesRoute, [user.username]);
+    console.log(url);
+    router.prefetch(url);
+  }, []);
+
   const handleSubmit = async (values: any) => {
     console.log(values);
     return true;

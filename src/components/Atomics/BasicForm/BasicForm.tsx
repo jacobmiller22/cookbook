@@ -103,7 +103,7 @@ const renderField = (
                     <Box key={`field-${index}-${subIndex}`}>
                       <Box width="100%" display="flex" alignItems="center">
                         <FormLabel>
-                          {customField.label} {subIndex + 1}
+                          {customField.singularLabel} {subIndex + 1}
                         </FormLabel>
                         <Spacer />
                         <Button

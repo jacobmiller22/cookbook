@@ -25,7 +25,6 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
       sx={{
         maxWidth: theme.layout.contentWidth,
         margin: "auto",
-        paddingInline: "0 !important",
         backgroundColor: theme.palette.background.paper,
       }}
       {...rest}
