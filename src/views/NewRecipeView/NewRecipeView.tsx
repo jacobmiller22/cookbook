@@ -16,16 +16,14 @@ const NewRecipeView = ({}: INewRecipeViewProps) => {
   const router = useRouter();
   const { user } = useAuth();
 
-  useEffect(() => {
-    // We will want to direct the user to their recipes page upon submission
-    // To more smoothly transition between pages, we prefetch the my recipes page
-    const url = replaceWildcards(myRecipesRoute, [user.username]);
-    console.log(url);
-    router.prefetch(url);
-  }, []);
+  // We will want to direct the user to their recipes page upon submission
+  // To more smoothly transition between pages, we prefetch the my recipes page
+  const url = replaceWildcards(myRecipesRoute, [user.username]);
+  router.prefetch(url);
 
   const handleSubmit = async (values: any) => {
     console.log(values);
+    router.push(url);
     return true;
   };
 

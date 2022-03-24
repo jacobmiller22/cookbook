@@ -4,6 +4,7 @@ import theme from "theme";
 /** Components */
 import { Banner } from "components/Atomics";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
+import Internal from "./components/Internal";
 
 const UserProfile = () => {
   const { user } = useAuth();
@@ -25,19 +26,25 @@ const UserProfile = () => {
             }}
             padding="0.5rem"
           >
-            <Avatar sx={{ height: avatarLength, width: avatarLength }} />
+            <Avatar
+              sx={{ height: avatarLength, width: avatarLength }}
+              src={user.image}
+            />
           </Box>
         </Box>
       </Banner>
-      <Box padding="0.5rem" maxWidth={theme.layout.contentWidth} width="100%">
+      <Box
+        padding="0.5rem"
+        maxWidth={theme.layout.contentWidth}
+        width="100%"
+        sx={{ backgroundColor: theme.palette.background.default }}
+      >
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography variant="h4">{user.name}</Typography>
           <Typography variant="body1">{user.username}</Typography>
         </Box>
         <Divider variant="middle" />
-        <Box display="block">
-          <Typography variant="body1">{user.email}</Typography>
-        </Box>
+        <Internal />
       </Box>
     </>
   );

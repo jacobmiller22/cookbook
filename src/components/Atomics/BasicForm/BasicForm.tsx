@@ -29,9 +29,15 @@ interface IRecipeFormProps {
   fields: any[];
   handleSubmit: (values: any) => Promise<boolean>;
   schema?: AnySchema;
+  submitButtonText?: string;
 }
 
-const BasicForm = ({ fields, handleSubmit, schema }: IRecipeFormProps) => {
+const BasicForm = ({
+  fields,
+  handleSubmit,
+  schema,
+  submitButtonText = "Submit",
+}: IRecipeFormProps) => {
   const onSubmit = async (values: any, actions) => {
     const proceed: boolean = await handleSubmit(values);
     actions.setSubmitting(false);
@@ -58,7 +64,7 @@ const BasicForm = ({ fields, handleSubmit, schema }: IRecipeFormProps) => {
           >
             {renderFields(fields, { formikProps: props })}
             <Button type="submit" variant="contained">
-              Submit
+              {submitButtonText}
             </Button>
           </Box>
         </Form>
@@ -142,7 +148,7 @@ const renderField = (
                 }}
                 startIcon={<AddIcon />}
               >
-                Add ingredient
+                Add
               </Button>
             </Box>
           )}
@@ -191,6 +197,9 @@ const renderInput = (
           helperText={customField.helperText}
           required={customField.required}
           error={errorMessage}
+          disabled={
+            customField.editable === undefined ? false : !customField.editable
+          }
           {...formikField}
         />
       );
@@ -211,6 +220,9 @@ const renderInput = (
           InputLabelProps={{
             shrink: true,
           }}
+          disabled={
+            customField.editable === undefined ? false : !customField.editable
+          }
           variant="standard"
           required={customField.required}
           error={errorMessage}
@@ -237,6 +249,9 @@ const renderInput = (
           helperText={customField.helperText}
           required={customField.required}
           error={errorMessage}
+          disabled={
+            customField.editable === undefined ? false : !customField.editable
+          }
           {...formikField}
         />
       );
@@ -257,6 +272,9 @@ const renderInput = (
           required={customField.required}
           error={errors[formikField.name]}
           touched={touched[formikField.name]}
+          disabled={
+            customField.editable === undefined ? false : !customField.editable
+          }
           {...formikField}
         />
       );
