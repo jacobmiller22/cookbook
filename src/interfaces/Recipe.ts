@@ -9,6 +9,7 @@ export type Recipe = {
   ingredients: QuantifiedIngredient[];
   instructions: string;
   author: string;
+  authorId: string;
   prepTime: string;
   cookTime: string;
   servings: number;

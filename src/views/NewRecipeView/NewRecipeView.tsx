@@ -7,8 +7,9 @@ import { Box, Divider, Typography } from "@mui/material";
 import { BackButton, BasicForm } from "components/Atomics";
 import fields from "./fields";
 import fieldsSchema from "./schema";
-import { myRecipesRoute, replaceWildcards } from "routes";
-import useAuth from "hooks/Auth/useAuth";
+import { myRecipesRoute } from "routes/client";
+import { replaceWildcards } from "routes";
+import { useAuth } from "hooks";
 
 interface INewRecipeViewProps {}
 

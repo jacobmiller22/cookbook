@@ -1,4 +1,4 @@
-import { useModal } from "contexts/modal";
+import { useModal } from "hooks";
 
 /** Interfaces/types */
 
@@ -19,6 +19,7 @@ const Modal = ({}: IModalProps) => {
   const [modal, dispatch] = useModal();
 
   const renderDialogTitle = () => {
+    //@ts-ignore
     switch (modal.type) {
       case MODAL_VARIANT.FORM:
         return (

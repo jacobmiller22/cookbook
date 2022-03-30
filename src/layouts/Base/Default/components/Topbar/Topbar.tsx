@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import _ from "lodash";
 import Link from "next/link";
 import getTheme from "theme";
@@ -10,8 +10,15 @@ import AuthButton from "components/Auth/AuthButton";
 import { List, ListItem, ListItemText } from "@mui/material";
 
 import theme from "theme";
-import useAuth from "hooks/Auth/useAuth";
-import { myRecipesRoute, profileRoute, replaceWildcards, Route } from "routes";
+import { useAuth } from "hooks";
+import {
+  myProfileRoute,
+  myRecipesRoute,
+  profileRoute,
+  Route,
+} from "routes/client";
+import { replaceWildcards } from "routes";
+import { SignupButton } from "components/Auth";
 
 interface ITopbarProps {
   className?: string;
@@ -20,9 +27,15 @@ interface ITopbarProps {
 }
 
 const Topbar = ({ className, items, rest }: ITopbarProps) => {
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
+  const listRef = useRef(null);
+
+  useEffect(() => {
+    console.log(isAuthenticated);
+  }, [listRef, isAuthenticated, user]);
 
   const renderItems = () => items;
+
   return (
     <Toolbar
       className={className}
@@ -30,11 +43,12 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
         maxWidth: theme.layout.contentWidth,
         margin: "auto",
         backgroundColor: theme.palette.background.paper,
+        paddingX: "0px !important",
       }}
       {...rest}
     >
       <Link href="/">
-        <div style={{ cursor: "pointer" }}>Logo</div>
+        <div style={{ cursor: "pointer" }}>RecipeX</div>
       </Link>
       <div
         style={{
@@ -42,7 +56,6 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
         }}
       />
 
-      {/* <Hidden lgDown> */}
       <List
         disablePadding
         style={{
@@ -50,14 +63,23 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
           justifyContent: "space-between",
           alignItems: "center",
         }}
+        ref={listRef}
       >
         {items && renderItems()}
         <RouteLink route={myRecipesRoute} replace={[user.username]} />
-        <RouteLink route={profileRoute} replace={[user.username]} />
+        <RouteLink route={myProfileRoute} replace={[]} />
 
-        <ListItem sx={{ whiteSpace: "nowrap", paddingRight: "0" }}>
+        <ListItem
+          sx={{ whiteSpace: "nowrap" }}
+          disableGutters={isAuthenticated}
+        >
           <AuthButton />
         </ListItem>
+        {!isAuthenticated && (
+          <ListItem disableGutters>
+            <SignupButton sx={{ whiteSpace: "nowrap" }} />
+          </ListItem>
+        )}
       </List>
       {/* </Hidden> */}
     </Toolbar>

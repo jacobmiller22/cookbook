@@ -1,8 +1,11 @@
 import axios from "axios";
 import { getAuthorization } from "lib/auth";
 import { RecipeParams } from "interfaces/Recipe";
+import { ServiceResponse } from "./http";
 
-export const getRecipes = async (params: RecipeParams) => {
+export const getRecipes = async <T>(
+  params: RecipeParams
+): Promise<ServiceResponse<T>> => {
   const { ingredients, name } = params;
 
   try {
@@ -12,9 +15,13 @@ export const getRecipes = async (params: RecipeParams) => {
       },
       params: { ingredients: JSON.stringify(ingredients), name },
     });
-    return { data: res.data };
+    return { success: true, status: res.status, message: "", data: res.data };
   } catch (err) {
-    return { error: `Error: ${err.toString()}` };
+    return {
+      success: false,
+      status: err.status,
+      message: `Error: ${err.toString()}`,
+    };
   }
 };
 

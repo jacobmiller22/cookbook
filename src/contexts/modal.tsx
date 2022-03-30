@@ -28,13 +28,13 @@ const ModalProvider = ({ children }) => {
 };
 export default ModalProvider;
 
-export const useModal = () => {
-  // @ts-ignore
-  const ctx: [IModalCtx, any] = useContext(ModalCtx);
+// export const useModal = () => {
+//   // @ts-ignore
+//   const ctx: [IModalCtx, any] = useContext(ModalCtx);
 
-  if (!ctx) {
-    throw "useModal must be used within a ModalProvider";
-  }
+//   if (!ctx) {
+//     throw "useModal must be used within a ModalProvider";
+//   }
 
-  return ctx;
-};
+//   return ctx;
+// };

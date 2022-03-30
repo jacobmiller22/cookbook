@@ -1,24 +1,26 @@
-import useAuth from "hooks/Auth/useAuth";
-import { useEffect } from "react";
-import theme from "theme";
-import axios from "axios";
-
 /** Components */
+import theme from "theme";
 import { Banner } from "components/Atomics";
 import { Avatar, Box, Divider, Typography } from "@mui/material";
-import { Internal, External } from "./components";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import {
+  TypographySkeleton as TextSkele,
+  ImageSkeleton as ImgSkele,
+} from "components/Skeletons";
+import { useProfile } from "hooks";
+import { Member } from "interfaces/Member";
 
-const UserProfile = () => {
-  const { user } = useAuth();
-  const router = useRouter();
+type UserProfileProps = {
+  children: React.ReactNode;
+  profile?: Member;
+};
+
+const UserProfile = ({
+  children,
+  profile: customProfile,
+}: UserProfileProps) => {
+  const profile = customProfile || useProfile();
 
   const renderProfile = () => {
-    const isSelf = user.username === router.query.username;
-
-    useEffect(() => {}, []);
-
     return (
       <Box
         padding="0.5rem"
@@ -27,11 +29,19 @@ const UserProfile = () => {
         sx={{ backgroundColor: theme.palette.background.default }}
       >
         <Box display="flex" flexDirection="column" alignItems="center">
-          <Typography variant="h4">{user.name}</Typography>
-          <Typography variant="body1">{user.username}</Typography>
+          {profile ? (
+            <Typography variant="h4">{profile?.name}</Typography>
+          ) : (
+            <TextSkele variant="h4" width={200} />
+          )}
+          {profile ? (
+            <Typography variant="body1">{profile?.username}</Typography>
+          ) : (
+            <TextSkele variant="body1" width={160} />
+          )}
         </Box>
         <Divider variant="middle" />
-        {isSelf ? <Internal /> : <External />}
+        {children}
       </Box>
     );
   };
@@ -52,10 +62,14 @@ const UserProfile = () => {
             }}
             padding="0.5rem"
           >
-            <Avatar
-              sx={{ height: avatarLength, width: avatarLength }}
-              src={user.image}
-            />
+            {profile ? (
+              <Avatar
+                sx={{ height: avatarLength, width: avatarLength }}
+                src={profile?.image}
+              />
+            ) : (
+              <ImgSkele />
+            )}
           </Box>
         </Box>
       </Banner>

@@ -18,4 +18,5 @@ export interface IUserfrontUser {
   tenantId: string;
   userId: number;
   userUuid: string;
+  hasRole: (role: string, options?) => boolean;
 }

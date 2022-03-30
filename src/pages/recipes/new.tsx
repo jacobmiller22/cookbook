@@ -6,11 +6,9 @@ import { SearchView } from "views";
 import TopbarGroup from "components/Atomics/TopbarGroup";
 import { DEFAULT_TOPBAR_ITEMS } from "consts";
 import NewRecipeView from "views/NewRecipeView";
-import useAuth, { IUseAuthReturn } from "hooks/Auth/useAuth";
-import { IUserfrontUser } from "interfaces/Auth";
 
-import { loginRoute } from "routes";
 import { AuthGuard } from "components/Auth";
+import { Role } from "lib/auth";
 
 const IndexPage: NextPage = () => {
   /** Auth Guard */
@@ -19,7 +17,7 @@ const IndexPage: NextPage = () => {
   return (
     //@ts-ignore
     <Base topbarItems={TopbarGroup({ items: DEFAULT_TOPBAR_ITEMS })}>
-      <AuthGuard roles={[]}>
+      <AuthGuard roles={[Role.MEMBER]}>
         <NewRecipeView />
       </AuthGuard>
     </Base>

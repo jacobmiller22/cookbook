@@ -7,6 +7,7 @@ import { G_VISION_ANNOTATE_ALLOWED_FILE_TYPES } from "utils/google/consts";
 import getType from "utils/image/type";
 import _ from "lodash";
 
+import { QuantifiedIngredient } from "interfaces/Recipe";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -60,7 +61,7 @@ export default RecipesAPI;
 const getRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
   const { ingredients: ingredientsJSON, name } = req.query;
 
-  const ingredients: string[] = JSON.parse(ingredientsJSON);
+  const ingredients: QuantifiedIngredient[] = JSON.parse(ingredientsJSON);
 
   try {
     const recipes = await prisma.recipe.findMany({
@@ -72,7 +73,9 @@ const getRecipes = async (req: RecipeApiReq, res: NextApiResponse) => {
         ingredients: {
           some: {
             name: {
-              [_.isEmpty(ingredients) ? "notIn" : "in"]: ingredients,
+              [_.isEmpty(ingredients) ? "notIn" : "in"]: ingredients.map(
+                (ingredient) => ingredient.name
+              ),
             },
           },
         },

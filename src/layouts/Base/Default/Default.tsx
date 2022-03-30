@@ -13,7 +13,7 @@ import theme from "theme";
 interface IDefaultLayoutProps {
   children: React.ReactNode;
   topbarItems?: React.ReactNode[];
-  style: {};
+  style?: {};
   divider?: boolean;
 }
 const Default = ({

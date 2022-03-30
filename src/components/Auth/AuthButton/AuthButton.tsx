@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 /** Auth */
-import useAuth from "hooks/Auth/useAuth";
+import { useAuth } from "hooks";
 
 /** Components */
 import Button from "@mui/material/Button";

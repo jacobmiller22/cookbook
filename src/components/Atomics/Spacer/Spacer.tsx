@@ -2,10 +2,12 @@
 
 /** components */
 
-interface ISpacerProps {}
+interface ISpacerProps {
+  [rest: string]: any;
+}
 
-const Spacer = ({}: ISpacerProps) => {
-  return <div style={{ flexGrow: 1 }} />;
-};
+const Spacer = ({ ...rest }: ISpacerProps) => (
+  <div style={{ flexGrow: 1, ...rest }} />
+);
 
 export default Spacer;

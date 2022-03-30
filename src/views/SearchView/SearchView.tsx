@@ -1,33 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { newRecipeRoute } from "routes";
+import { newRecipeRoute } from "routes/client";
 /** Interfaces/types */
 
 /** components */
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import { QuantifiedIngredient, Recipe } from "interfaces/Recipe";
 import { Spacer } from "components/Atomics";
-import { RecipeList, IngredientPanel, ResultsDescriptor } from "./components";
+import {
+  RecipeList,
+  IngredientPanel,
+  ResultsDescriptor,
+} from "components/Recipe";
 import { getRecipes } from "lib/recipes";
 import theme from "theme";
 import AddIcon from "@mui/icons-material/Add";
+import useRecipes from "hooks/useRecipes";
 
-interface ISearchViewProps {}
+type SearchViewProps = {
+  bannerContent?: React.ReactNode;
+};
 
-const SearchView = ({}: ISearchViewProps) => {
+const SearchView = ({ bannerContent }: SearchViewProps) => {
   const router = useRouter();
 
-  const [ingredients, setIngredients] = useState<QuantifiedIngredient[]>([]);
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      const newRecipes = await getRecipes({ ingredients });
-      setRecipes(newRecipes.data);
-      setIsLoading(false);
-    })();
-  }, [ingredients]);
+  const { recipes, isLoading, ingredients, setIngredients } = useRecipes();
 
   const handleAddRecipe = () => {
     console.log("add recipe");
@@ -54,7 +51,9 @@ const SearchView = ({}: ISearchViewProps) => {
           sx={{ maxWidth: theme.layout.contentWidth, paddingBottom: "4rem" }}
           width="100%"
           flexDirection="row"
+          alignItems="center"
         >
+          {bannerContent}
           <Spacer />
           <Button
             variant="contained"
@@ -84,7 +83,7 @@ const SearchView = ({}: ISearchViewProps) => {
           <RecipeList recipes={recipes} isLoading={isLoading} />
           <Spacer />
           <ResultsDescriptor
-            results={{ total: 10, displayed: 10 }}
+            results={{ total: recipes.length, displayed: recipes.length }}
             justifyContent="flex-end"
           />
         </Box>
