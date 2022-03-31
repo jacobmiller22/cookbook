@@ -2,6 +2,7 @@
  * Endpoint for userfront user created webhook
  */
 
+import { DEFAULT_BIO } from "consts";
 import { initAccount } from "lib/auth/server";
 import {
   HttpMethod,
@@ -63,13 +64,18 @@ const UserCreatedWebhookApi = async (
 
       const memberDetails = {
         id: record.userId,
-        name: "Jacob Miller",
-        username: "jacobmiller22",
-        email: "jacobmiller22@vt.edu",
+        name: record.name,
+        email: record.email,
         createdAt: record.createdAt,
+        bio: DEFAULT_BIO,
       };
 
       const initAccountResponse = await initAccount(memberDetails);
+
+      if (!initAccountResponse.success) {
+        res.status(initAccountResponse.status).end();
+        return;
+      }
 
       // Send success response
       res.status(HttpStatus.ACCEPTED).end();

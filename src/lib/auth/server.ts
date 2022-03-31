@@ -1,4 +1,4 @@
-import { ServiceResponse } from "lib/http";
+import { HttpStatus, ServiceResponse } from "lib/http";
 import { runQuery } from "lib/prisma";
 
 export const initAccount = async (
@@ -26,25 +26,23 @@ export const initAccount = async (
         create: [],
       },
       joinedAt: member.createdAt,
-      // bio: member.bio,
+      bio: member.bio,
     },
   };
   try {
-    const response = await runQuery("user", "upsert", query);
-
-    console.log("prisma response");
+    await runQuery("user", "upsert", query);
 
     return {
       success: true,
       status: 200,
       message: "",
-      data: response,
     };
   } catch (err) {
     console.error(err);
+
     return {
       success: false,
-      status: err.response.status,
+      status: HttpStatus.INTERNAL_SERVER_ERROR,
       message: `Error: ${err.toString()}`,
     };
   }

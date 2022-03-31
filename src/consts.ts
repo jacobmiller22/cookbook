@@ -23,3 +23,5 @@ export const DEFAULT_TOPBAR_ITEMS = [
 ];
 
 export const MAX_WIDTH = "1200px";
+
+export const DEFAULT_BIO = "I love long walks on the beach!";

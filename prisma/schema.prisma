@@ -38,7 +38,7 @@ model User {
   name   String
   email String @unique
   joinedAt DateTime @default(now())
-
   recipes Recipe[]
+  bio String @default("")
   // @@map(name: "User") 
 }
