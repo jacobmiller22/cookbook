@@ -4,7 +4,7 @@
 import { Skeleton } from "@mui/material";
 
 interface IButtonSkeletonProps {
-  width?: number;
+  width?: number | string;
   height?: number;
 }
 

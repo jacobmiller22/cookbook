@@ -11,6 +11,7 @@ import { Box, Typography } from "@mui/material";
 import { BasicForm } from "components/Atomics";
 import { getAccountDetails, updateUsername } from "lib/auth";
 import { useSnackbar } from "notistack";
+import { FormSkeleton as FormSkele } from "components/Skeletons";
 
 interface IAccountProps {}
 
@@ -61,7 +62,12 @@ const Account = ({}: IAccountProps) => {
     return true;
   };
 
-  if (!details || isLoading) return <Box>Loading...</Box>;
+  if (!details || isLoading)
+    return (
+      <Box width="100%">
+        <FormSkele fields={[1, 2, 3, 4]} />
+      </Box>
+    );
 
   // Fill in the form with the user's data
   let initialFields = fields.map((field) => ({
