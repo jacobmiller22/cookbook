@@ -24,10 +24,12 @@ const RecipeListView = ({}: RecipeListViewProps) => {
         ingredients={ingredients}
         setIngredients={setIngredients}
       />
-      <RecipeList recipes={[]} isLoading={isLoading} />
+      <RecipeList recipes={recipes} isLoading={isLoading} />
       <Box display="flex">
         <Spacer />
-        <ResultsDescriptor results={{ displayed: 5, total: 0 }} />
+        <ResultsDescriptor
+          results={{ displayed: recipes.length, total: recipes.length }}
+        />
       </Box>
     </Box>
   );

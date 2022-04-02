@@ -13,3 +13,4 @@ export const useHookCtx = <T>(ctx: Context<T>): any => {
 export { default as useAuth } from "./useAuth";
 export { default as useProfile } from "./useProfile";
 export { default as useModal } from "./useModal";
+export { default as useForceUpdate } from "./useForceUpdate";

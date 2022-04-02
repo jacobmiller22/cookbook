@@ -3,18 +3,14 @@ import {
   Dispatch,
   SetStateAction,
   useEffect,
-  useReducer,
   useState,
 } from "react";
-import { MODAL_VARIANT } from "interfaces";
-import { profileReducer } from "reducers";
-import { Profile } from "interfaces/Member";
-import { getMemberByUsername } from "lib/member";
 import { useRouter } from "next/router";
 import { QuantifiedIngredient, Recipe } from "interfaces/Recipe";
-import { getRecipes } from "lib/recipes";
+import { getRecipes } from "lib/recipe";
 import { ServiceResponse } from "lib/http";
 import { useSnackbar } from "notistack";
+import { getMemberRecipes } from "lib/recipe";
 
 export type TRecipesCtx = {
   recipes: Recipe[];
@@ -25,21 +21,28 @@ export type TRecipesCtx = {
 
 export const RecipeCtx = createContext<TRecipesCtx>(null);
 
-const initialState = null;
+const RecipeProvider = ({ children, useRoute = false }) => {
+  const router = useRouter();
 
-const RecipeProvider = ({ children }) => {
-  // const [test, dispatch] = useReducer(profileReducer, initialState);
-  // const [ingredients, setIngredients] = useState<QuantifiedIngredient[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [ingredients, setIngredients] = useState<QuantifiedIngredient[]>([]);
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
+    if (useRoute && !router.isReady) return;
+
+    console.log("useRoute && !router.isReady", useRoute);
+
     (async () => {
-      const response: ServiceResponse<Recipe[]> = await getRecipes({
-        ingredients,
-      });
+      const response: ServiceResponse<Recipe[]> = await (useRoute
+        ? getMemberRecipes(router.query.username as string, { ingredients })
+        : getRecipes({
+            ingredients,
+          }));
+
+      console.log("response", response);
+
       if (response.success) {
         setRecipes(response.data || []);
       } else {
@@ -48,7 +51,7 @@ const RecipeProvider = ({ children }) => {
       }
       setIsLoading(false);
     })();
-  }, [ingredients]);
+  }, [ingredients, router.isReady]);
 
   return (
     <RecipeCtx.Provider

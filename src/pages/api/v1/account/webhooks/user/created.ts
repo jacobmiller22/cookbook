@@ -10,7 +10,7 @@ import {
   methodNotImplemented,
   ServiceResponse,
 } from "lib/http";
-import { getMemberById, __getMemberByUsername } from "lib/member";
+import { getMemberById } from "lib/member";
 import { WebhookAction } from "lib/userfront";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 
@@ -66,9 +66,12 @@ const UserCreatedWebhookApi = async (
         id: record.userId,
         name: record.name,
         email: record.email,
+        username: record.username,
         createdAt: record.createdAt,
         bio: DEFAULT_BIO,
       };
+
+      console.log("memberDetails", memberDetails);
 
       const initAccountResponse = await initAccount(memberDetails);
 

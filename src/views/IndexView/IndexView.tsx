@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getRecipes } from "lib/recipes";
+import { getRecipes } from "lib/recipe";
 import { RecipeParams } from "interfaces/Recipe";
 
-import { Button, Typography, Grid, TextField, Box } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 
 import { CriteriaForm } from "components/Atomics";
 

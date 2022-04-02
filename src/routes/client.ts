@@ -4,6 +4,8 @@ export type Route = {
   wildcards?: string[];
 };
 
+/** Pages  */
+
 export const newRecipeRoute: Route = {
   path: "/recipes/new",
   name: "New Recipe",

@@ -16,7 +16,7 @@ export interface IUserfrontUser {
   updatedAt: string;
   model: string;
   tenantId: string;
-  userId: number;
+  userId: string;
   userUuid: string;
   hasRole: (role: string, options?) => boolean;
 }

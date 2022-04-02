@@ -2,7 +2,7 @@ import { createContext, useEffect, useReducer, useState } from "react";
 import { MODAL_VARIANT } from "interfaces";
 import { profileReducer } from "reducers";
 import { Profile } from "interfaces/Member";
-import { getMemberByUsername } from "lib/member";
+import { getMemberByUsername, getMemberMetaByUsername } from "lib/member";
 import { useRouter } from "next/router";
 
 export type TProfileCtx = Profile;
@@ -26,7 +26,14 @@ const ProfileProvider = ({ children }) => {
       if (!username) return;
 
       const member = await getMemberByUsername(username);
-      setProfile(member);
+
+      const meta = await getMemberMetaByUsername(username);
+
+      const joinedAt = new Date(meta.joinedAt);
+
+      console.log({ ...member, ...meta, joinedAt });
+
+      setProfile({ ...member, ...meta, joinedAt });
     };
 
     fetchProfile();

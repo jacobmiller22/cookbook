@@ -5,6 +5,7 @@ import { AnySchema } from "yup";
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -30,6 +31,7 @@ interface IRecipeFormProps {
   handleSubmit: (values: any) => Promise<boolean>;
   schema?: AnySchema;
   submitButtonText?: string;
+  successText?: string;
 }
 
 const BasicForm = ({
@@ -37,11 +39,18 @@ const BasicForm = ({
   handleSubmit,
   schema,
   submitButtonText = "Submit",
+  successText = "Success",
 }: IRecipeFormProps) => {
+  const [submitText, setSubmitText] = React.useState(submitButtonText);
+
   const onSubmit = async (values: any, actions) => {
-    const proceed: boolean = await handleSubmit(values);
+    const success: boolean = await handleSubmit(values);
     actions.setSubmitting(false);
-    if (proceed) {
+    setSubmitText(successText);
+    setTimeout(() => {
+      setSubmitText(submitButtonText);
+    }, 3000);
+    if (success) {
       actions.resetForm();
     }
   };
@@ -63,8 +72,16 @@ const BasicForm = ({
             paddingX="2"
           >
             {renderFields(fields, { formikProps: props })}
-            <Button type="submit" variant="contained">
-              {submitButtonText}
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={!props.dirty || props.isSubmitting}
+            >
+              {props.isSubmitting ? (
+                <CircularProgress size={24.5} />
+              ) : (
+                submitText
+              )}
             </Button>
           </Box>
         </Form>

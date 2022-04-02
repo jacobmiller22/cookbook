@@ -17,7 +17,7 @@ const UserRecipesPage: NextPage = () => {
     //@ts-ignore
     <Base topbarItems={TopbarGroup({ items: DEFAULT_TOPBAR_ITEMS })} divider>
       <ProfileProvider>
-        <RecipeProvider>
+        <RecipeProvider useRoute>
           <RecipeListView />
         </RecipeProvider>
       </ProfileProvider>

@@ -22,7 +22,9 @@ const External = ({}: IExternalProps) => {
   const renderChips = () => {
     const chips = [
       `${profile?.recipeCount} recipes`,
-      `Joined: ${profile?.createdAt}`,
+      `Joined: ${profile?.joinedAt.toLocaleDateString("en-US", {
+        year: "numeric",
+      })}`,
     ];
 
     if (!profile) {
@@ -49,7 +51,7 @@ const External = ({}: IExternalProps) => {
       </Box>
       <Box>
         <Typography variant="h6">Bio</Typography>
-        <Typography>MY long bio</Typography>
+        <Typography>{profile?.bio}</Typography>
       </Box>
       <Box>{renderChips()}</Box>
     </Box>

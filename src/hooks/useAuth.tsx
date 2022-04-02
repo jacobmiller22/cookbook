@@ -29,7 +29,7 @@ const useAuth = (): IUseAuthReturn => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("use effect", isAuthenticated);
+    // console.log("use effect", isAuthenticated);
   }, [isAuthenticated]);
 
   const checkAuth = async () => {

@@ -12,7 +12,6 @@ import {
   IngredientPanel,
   ResultsDescriptor,
 } from "components/Recipe";
-import { getRecipes } from "lib/recipes";
 import theme from "theme";
 import AddIcon from "@mui/icons-material/Add";
 import useRecipes from "hooks/useRecipes";

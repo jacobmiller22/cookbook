@@ -12,5 +12,5 @@ export interface PrismaProfile {
 }
 
 export interface Profile extends Omit<Member, "createdAt">, PrismaProfile {
-  createdAt: Date;
+  joinedAt: Date;
 }
