@@ -21,6 +21,7 @@ export const light = {
     primary: "#2d3748",
     secondary: "#718096",
     contrast: "#FFF",
+    outline: "rgba(0, 0, 0, 0.23)",
   },
   divider: "rgba(0, 0, 0, 0.12)",
   background: {

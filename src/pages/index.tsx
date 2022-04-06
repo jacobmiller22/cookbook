@@ -6,14 +6,14 @@ import { SearchView } from "views";
 import TopbarGroup from "components/Atomics/TopbarGroup";
 import { DEFAULT_TOPBAR_ITEMS } from "consts";
 import RecipeProvider from "contexts/recipes";
+import { Typography } from "@mui/material";
 
 const IndexPage: NextPage = () => (
-  <Base
-    topbarItems={TopbarGroup({ items: DEFAULT_TOPBAR_ITEMS })}
-    divider={false}
-  >
+  <Base topbarItems={TopbarGroup({ items: DEFAULT_TOPBAR_ITEMS })} divider>
     <RecipeProvider>
-      <SearchView />
+      <SearchView
+        bannerContent={<Typography variant="h6">All recipes</Typography>}
+      />
     </RecipeProvider>
   </Base>
 );
