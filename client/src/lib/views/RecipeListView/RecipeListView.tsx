@@ -1,10 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useProfile } from "lib/hooks";
-import {
-  RecipeList,
-  IngredientPanel,
-  ResultsDescriptor,
-} from "lib/components/Recipe";
+import { RecipeList, IngredientPanel } from "lib/components/Recipe";
 import theme from "lib/theme";
 import { Spacer } from "lib/components/Atomics";
 import useRecipes from "lib/hooks/useRecipes";
@@ -27,9 +23,11 @@ const RecipeListView = ({}: RecipeListViewProps) => {
       <RecipeList recipes={recipes} isLoading={isLoading} />
       <Box display="flex" height="100%">
         <Spacer />
-        <ResultsDescriptor
-          results={{ displayed: recipes.length, total: recipes.length }}
-        />
+        <Box display="flex">
+          <Typography variant="body2">
+            Showing {recipes.length || 0} recipes
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

@@ -3,7 +3,7 @@ import { useState, useCallback, Dispatch, SetStateAction } from "react";
 /** Interfaces/types */
 
 /** components */
-import { QuantifiedIngredient } from "interfaces/Recipe";
+import { QuantifiedIngredient } from "lib/recipe/types";
 import {
   Alert,
   Box,
@@ -24,7 +24,7 @@ const IngredientPanel = ({
   ingredients = [],
   setIngredients,
 }: IIngredientPanelProps) => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);

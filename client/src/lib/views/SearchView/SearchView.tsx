@@ -4,13 +4,9 @@ import { newRecipeRoute } from "lib/routes/client";
 /** Interfaces/types */
 
 /** components */
-import { Box, Button, Divider, Tooltip } from "@mui/material";
+import { Box, Button, Divider, Tooltip, Typography } from "@mui/material";
 import { Banner, Spacer, SearchBar } from "lib/components/Atomics";
-import {
-  RecipeList,
-  IngredientPanel,
-  ResultsDescriptor,
-} from "lib/components/Recipe";
+import { RecipeList, IngredientPanel } from "lib/components/Recipe";
 import theme from "lib/theme";
 import AddIcon from "@mui/icons-material/Add";
 import useRecipes from "lib/hooks/useRecipes";
@@ -69,10 +65,11 @@ const SearchView = ({ bannerContent }: SearchViewProps) => {
           </Box>
           <Box display="flex" flexDirection="column" height="100%">
             <RecipeList recipes={recipes} isLoading={isLoading} />
-            <ResultsDescriptor
-              results={{ total: recipes.length, displayed: recipes.length }}
-              justifyContent="flex-end"
-            />
+            <Box display="flex" justifyContent="flex-end" width="100%">
+              <Typography variant="body2">
+                Showing {recipes.length || 0} recipe{recipes.length > 1 && "s"}
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Box>
