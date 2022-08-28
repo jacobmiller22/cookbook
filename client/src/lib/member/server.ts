@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ServiceResponse, HttpStatus } from "lib/http";
 import { getAuthHeader } from "lib/userfront";
-import { UF_SEARCH_USERS_RT } from "routes/server";
+import { UF_SEARCH_USERS_RT } from "lib/routes/server";
 import { runQuery } from "../prisma";
 
 export const __getMemberByUsername = async (

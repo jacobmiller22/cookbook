@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
-import { InternalProfileView, UserProfile } from "views";
-import { useAuth } from "hooks";
-import { Base } from "layouts";
-import { TopbarGroup } from "components/Atomics";
+import { InternalProfileView, UserProfile } from "lib/views";
+import { useAuth } from "lib/hooks";
+import { Base } from "lib/layouts";
+import { TopbarGroup } from "lib/components/Atomics";
 import { DEFAULT_TOPBAR_ITEMS } from "consts";
-import { AuthGuard } from "components/Auth";
+import { AuthGuard } from "lib/components/Auth";
 import { Role } from "lib/auth";
 
 const ProfilePage: NextPage = () => {

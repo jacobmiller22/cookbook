@@ -1,14 +1,13 @@
 import type { NextPage } from "next";
-import { Base } from "layouts";
-import { RecipeListView, SearchView } from "views";
+import { Base } from "lib/layouts";
+import { RecipeListView, SearchView } from "lib/views";
 
 /** Components */
-import TopbarGroup from "components/Atomics/TopbarGroup";
+import TopbarGroup from "lib/components/Atomics/TopbarGroup";
 import { DEFAULT_TOPBAR_ITEMS } from "consts";
-import MinUserCard from "components/Atomics/MinUserCard";
-import { useAuth } from "hooks";
-import ProfileProvider from "contexts/profile";
-import RecipeProvider from "contexts/recipes";
+import { useAuth } from "lib/hooks";
+import ProfileProvider from "lib/contexts/profile";
+import RecipeProvider from "lib/contexts/recipes";
 
 const UserRecipesPage: NextPage = () => {
   const { user } = useAuth();

@@ -1,5 +1,5 @@
-import { Auth as AuthLayout } from "layouts";
-import { Signup } from "views/Auth";
+import { Auth as AuthLayout } from "lib/layouts";
+import { Signup } from "lib/views/Auth";
 
 const signuppage = () => <Signup />;
 

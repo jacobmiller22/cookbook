@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import { Base } from "layouts";
-import { SearchView } from "views";
+import { Base } from "lib/layouts";
+import { SearchView } from "lib/views";
 
 /** Components */
-import TopbarGroup from "components/Atomics/TopbarGroup";
+import TopbarGroup from "lib/components/Atomics/TopbarGroup";
 import { DEFAULT_TOPBAR_ITEMS } from "consts";
-import RecipeProvider from "contexts/recipes";
+import RecipeProvider from "lib/contexts/recipes";
 import { Typography } from "@mui/material";
 
 const IndexPage: NextPage = () => (

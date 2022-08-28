@@ -1,8 +1,8 @@
 import { HttpStatus, ServiceResponse } from "lib/http";
 import { runQuery } from "lib/prisma";
 import axios, { Method } from "axios";
-import { UF_UPDATE_USER_RT } from "routes/server";
-import { replaceWildcards } from "routes";
+import { UF_UPDATE_USER_RT } from "lib/routes/server";
+import { replaceWildcards } from "lib/routes";
 import { getAuthHeader } from "lib/userfront";
 
 export const initAccount = async (

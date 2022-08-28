@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getAuthorization } from "lib/auth";
-import { RecipeParams } from "interfaces/Recipe";
+import { RecipeParams } from "lib/recipe/types";
 import { ServiceResponse } from "lib/http";
-import { replaceWildcards } from "routes";
-import { MEMBER_RECIPES_RT } from "routes/server";
+import { replaceWildcards } from "lib/routes";
+import { MEMBER_RECIPES_RT } from "lib/routes/server";
 
 export const getRecipes = async <T>(
   params: RecipeParams

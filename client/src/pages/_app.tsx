@@ -1,11 +1,11 @@
 import type { AppProps } from "next/app";
-import { ModalProvider } from "contexts";
-import { Modal } from "components/Atomics";
+import { ModalProvider } from "lib/contexts";
+import { Modal } from "lib/components/Atomics";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
-import theme from "theme";
+import theme from "lib/theme";
 
 import { SnackbarProvider } from "notistack";
-import AuthProvider from "contexts/auth";
+import AuthProvider from "lib/contexts/auth";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

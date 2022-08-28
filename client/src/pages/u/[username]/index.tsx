@@ -1,14 +1,11 @@
 import type { NextPage } from "next";
-import { Base } from "layouts";
-import { UserProfile, ExternalProfileView } from "views";
+import { Base } from "lib/layouts";
+import { UserProfile, ExternalProfileView } from "lib/views";
 
 /** Components */
-import TopbarGroup from "components/Atomics/TopbarGroup";
+import TopbarGroup from "lib/components/Atomics/TopbarGroup";
 import { DEFAULT_TOPBAR_ITEMS } from "consts";
-import { getMemberByUsername } from "lib/member";
-import router, { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import ProfileProvider from "contexts/profile";
+import ProfileProvider from "lib/contexts/profile";
 
 const UserProfilePage: NextPage = () => {
   return (

@@ -1,6 +1,6 @@
 // import WithLayout from "WithLayout";
-import { Auth as AuthLayout } from "layouts";
-import { Login } from "views/Auth";
+import { Auth as AuthLayout } from "lib/layouts";
+import { Login } from "lib/views/Auth";
 
 const loginpage = () => <Login />;
 

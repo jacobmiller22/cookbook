@@ -1,7 +1,7 @@
 import axios from "axios";
-import { Member } from "interfaces/Member";
-import { replaceWildcards } from "routes";
-import { MEMBER_META_RT, MEMBER_RT, UF_READ_USER_RT } from "routes/server";
+import { Member } from "lib/member/types";
+import { replaceWildcards } from "lib/routes";
+import { MEMBER_META_RT, MEMBER_RT, UF_READ_USER_RT } from "lib/routes/server";
 import { HttpStatus, ServiceResponse } from "../http";
 
 import { getAuthHeader } from "../userfront";

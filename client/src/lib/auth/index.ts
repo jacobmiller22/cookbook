@@ -3,8 +3,8 @@ import { v4 as uuid4 } from "uuid";
 import hmacSHA512 from "crypto-js/hmac-sha512";
 import { ServiceResponse } from "lib/http";
 import axios from "axios";
-import { ACCOUNT_DETAILS_RT, ACCOUNT_USERNAME_RT } from "routes/server";
-import { replaceWildcards } from "routes";
+import { ACCOUNT_DETAILS_RT, ACCOUNT_USERNAME_RT } from "lib/routes/server";
+import { replaceWildcards } from "lib/routes";
 
 const { V1_ACCESS_KEY_ID, V1_SECRET_ACCESS_KEY } = keys;
 
