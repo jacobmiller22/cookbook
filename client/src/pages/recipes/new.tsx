@@ -4,7 +4,7 @@ import { SearchView } from "lib/views";
 
 /** Components */
 import TopbarGroup from "lib/components/Atomics/TopbarGroup";
-import { DEFAULT_TOPBAR_ITEMS } from "consts";
+
 import NewRecipeView from "lib/views/NewRecipeView";
 
 import { AuthGuard } from "lib/components/Auth";
@@ -16,7 +16,7 @@ const IndexPage: NextPage = () => {
 
   return (
     //@ts-ignore
-    <Base topbarItems={TopbarGroup({ items: DEFAULT_TOPBAR_ITEMS })}>
+    <Base>
       <AuthGuard roles={[Role.MEMBER]}>
         <NewRecipeView />
       </AuthGuard>

@@ -31,26 +31,31 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
   const listRef = useRef(null);
   const hasMounted = useHasMounted();
 
-  useEffect(() => {
-    console.log("Topbar isAuthen", isAuthenticated);
-  }, [listRef, isAuthenticated, user]);
-
-  const renderAuthItems = () => [
-    hasMounted && (
+  const renderAuthItems = () =>
+    hasMounted && [
+      isAuthenticated && (
+        <RouteLink
+          key="my-recipes-link"
+          route={myRecipesRoute}
+          replace={[user.username]}
+        />
+      ),
+      isAuthenticated && (
+        <RouteLink key="my-profile-link" route={myProfileRoute} replace={[]} />
+      ),
       <ListItem
         key="auth-button"
         sx={{ whiteSpace: "nowrap" }}
         disableGutters={isAuthenticated}
       >
         <AuthButton />
-      </ListItem>
-    ),
-    hasMounted && !isAuthenticated && (
-      <ListItem key="signup-button" disableGutters>
-        <SignupButton sx={{ whiteSpace: "nowrap" }} />
-      </ListItem>
-    ),
-  ];
+      </ListItem>,
+      !isAuthenticated && (
+        <ListItem key="signup-button" disableGutters>
+          <SignupButton sx={{ whiteSpace: "nowrap" }} />
+        </ListItem>
+      ),
+    ];
 
   const renderItems = () => items;
 
@@ -84,8 +89,6 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
         ref={listRef}
       >
         {items && renderItems()}
-        <RouteLink route={myRecipesRoute} replace={[user.username]} />
-        <RouteLink route={myProfileRoute} replace={[]} />
         {renderAuthItems()}
       </List>
       {/* </Hidden> */}

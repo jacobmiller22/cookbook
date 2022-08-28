@@ -17,11 +17,6 @@ export const MONTHS = [
   { short: "Dec", long: "December" },
 ];
 
-export const DEFAULT_TOPBAR_ITEMS = [
-  // { label: "Search", url: "/search" },
-  // { label: "Recipes", url: "/recipes" },
-];
-
 export const MAX_WIDTH = "1200px";
 
 export const DEFAULT_BIO = "I love long walks on the beach!";

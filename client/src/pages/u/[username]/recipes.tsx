@@ -4,7 +4,7 @@ import { RecipeListView, SearchView } from "lib/views";
 
 /** Components */
 import TopbarGroup from "lib/components/Atomics/TopbarGroup";
-import { DEFAULT_TOPBAR_ITEMS } from "consts";
+
 import { useAuth } from "lib/hooks";
 import ProfileProvider from "lib/contexts/profile";
 import RecipeProvider from "lib/contexts/recipes";
@@ -14,7 +14,7 @@ const UserRecipesPage: NextPage = () => {
 
   return (
     //@ts-ignore
-    <Base topbarItems={TopbarGroup({ items: DEFAULT_TOPBAR_ITEMS })} divider>
+    <Base divider>
       <ProfileProvider>
         <RecipeProvider useRoute>
           <RecipeListView />

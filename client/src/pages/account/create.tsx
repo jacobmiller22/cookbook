@@ -6,14 +6,14 @@ import { getMemberByUsername } from "lib/member";
 import { useAuth } from "lib/hooks";
 import { Base } from "lib/layouts";
 import { TopbarGroup } from "lib/components/Atomics";
-import { DEFAULT_TOPBAR_ITEMS } from "consts";
+
 import { useSnackbar } from "notistack";
 
 const ProfilePage: NextPage = () => {
   const { user } = useAuth();
 
   return (
-    <Base topbarItems={TopbarGroup({ items: DEFAULT_TOPBAR_ITEMS })} divider>
+    <Base divider>
       <CreateAccountView />
     </Base>
   );
