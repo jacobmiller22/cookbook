@@ -10,7 +10,7 @@ import AuthButton from "components/Auth/AuthButton";
 import { List, ListItem, ListItemText } from "@mui/material";
 
 import theme from "theme";
-import { useAuth } from "hooks";
+import { useAuth, useHasMounted } from "hooks";
 import {
   myProfileRoute,
   myRecipesRoute,
@@ -29,10 +29,28 @@ interface ITopbarProps {
 const Topbar = ({ className, items, rest }: ITopbarProps) => {
   const { user, isAuthenticated } = useAuth();
   const listRef = useRef(null);
+  const hasMounted = useHasMounted();
 
   useEffect(() => {
-    console.log(isAuthenticated);
+    console.log("Topbar isAuthen", isAuthenticated);
   }, [listRef, isAuthenticated, user]);
+
+  const renderAuthItems = () => [
+    hasMounted && (
+      <ListItem
+        key="auth-button"
+        sx={{ whiteSpace: "nowrap" }}
+        disableGutters={isAuthenticated}
+      >
+        <AuthButton />
+      </ListItem>
+    ),
+    hasMounted && !isAuthenticated && (
+      <ListItem key="signup-button" disableGutters>
+        <SignupButton sx={{ whiteSpace: "nowrap" }} />
+      </ListItem>
+    ),
+  ];
 
   const renderItems = () => items;
 
@@ -68,18 +86,7 @@ const Topbar = ({ className, items, rest }: ITopbarProps) => {
         {items && renderItems()}
         <RouteLink route={myRecipesRoute} replace={[user.username]} />
         <RouteLink route={myProfileRoute} replace={[]} />
-
-        <ListItem
-          sx={{ whiteSpace: "nowrap" }}
-          disableGutters={isAuthenticated}
-        >
-          <AuthButton />
-        </ListItem>
-        {!isAuthenticated && (
-          <ListItem disableGutters>
-            <SignupButton sx={{ whiteSpace: "nowrap" }} />
-          </ListItem>
-        )}
+        {renderAuthItems()}
       </List>
       {/* </Hidden> */}
     </Toolbar>

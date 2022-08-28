@@ -12,50 +12,69 @@ import { useAuth } from "hooks";
 
 /** Components */
 import Button from "@mui/material/Button";
-import { EStatus } from "interfaces/Feedback";
 
-const AuthButton = () => {
+type AuthButtonProps = {
+  showMsg?: boolean;
+};
+
+enum LoginStatus {
+  PENDING = "PENDING",
+  SUCCESS = "SUCCESS",
+  ERROR = "ERROR",
+  _ = "",
+}
+
+const AuthButton = ({ showMsg = false }) => {
   const { isAuthenticated, logout } = useAuth();
-  const [status, setStatus] = useState<EStatus>(EStatus._);
+  const [status, setStatus] = useState<LoginStatus>(LoginStatus._);
 
-  const renderButton = () => {
-    if (isAuthenticated) {
-      const text =
-        status === EStatus._
-          ? "Log Out"
-          : status === EStatus.PENDING
-          ? "Logging Out"
-          : status === EStatus.SUCCESS
-          ? "Success"
-          : "Error";
-      return (
-        <Button
-          variant="outlined"
-          onClick={async () => {
-            await logout({ setStatus });
-          }}
-        >
-          {text}
-        </Button>
-      );
-    }
+  const text = getText(status, showMsg, isAuthenticated);
 
-    const text =
-      status === EStatus._
-        ? "Log In"
-        : status === EStatus.PENDING
-        ? "Logging In"
-        : status === EStatus.SUCCESS
-        ? "Success"
-        : "Error";
+  if (isAuthenticated) {
     return (
-      <Link href="/auth/login">
-        <Button variant="outlined">{text}</Button>
-      </Link>
+      <Button
+        variant="outlined"
+        onClick={async () => {
+          await logout({ setStatus });
+        }}
+      >
+        {text}
+      </Button>
     );
-  };
+  }
 
-  return <div>{renderButton()}</div>;
+  return (
+    <Link href="/auth/login">
+      <Button variant="outlined">{text}</Button>
+    </Link>
+  );
 };
 
 export default AuthButton;
+
+const getText = (
+  status: LoginStatus,
+  show: boolean,
+  isAuthenticated: boolean
+) => {
+  switch (status) {
+    case LoginStatus.PENDING:
+      if (show && !isAuthenticated) {
+        return "Logging In";
+      }
+      if (show && isAuthenticated) {
+        return "Logging Out";
+      }
+    case LoginStatus.SUCCESS:
+      if (show) {
+        return "Success";
+      }
+    case LoginStatus.ERROR:
+      if (show) {
+        return "Error";
+      }
+
+    default:
+      return isAuthenticated ? "Log Out" : "Log In";
+  }
+};

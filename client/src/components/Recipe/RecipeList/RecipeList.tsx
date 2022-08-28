@@ -50,7 +50,6 @@ const RecipeList = ({ recipes = [], isLoading }: IRecipeListProps) => {
             recipe.authorId,
             `${recipe.id}`,
           ])}
-          prefetch={i < 5}
         >
           <ListItem sx={{ padding: 0, mb: "0.5rem" }}>
             <RecipeItem recipe={recipe} />

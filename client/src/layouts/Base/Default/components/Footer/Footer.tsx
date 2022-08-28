@@ -19,7 +19,7 @@ const Footer = () => {
       }}
     >
       <Box maxWidth={theme.layout.contentWidth} display="flex">
-        <Box
+        {/* <Box
           display="flex"
           flexDirection="column"
           margin="0.75rem"
@@ -38,7 +38,7 @@ const Footer = () => {
           <TextLink href={replaceWildcards(profileRoute, [user.username])}>
             Profile
           </TextLink>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

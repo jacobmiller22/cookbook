@@ -4,7 +4,7 @@
 
 In order to start the frontend. Navigate to the `/client` directory.
 
-Install the necessary dependencies by optionally cleaning by removing the `node_modules` folder, then running `npm install`
+Install the necessary dependencies by optionally cleaning by removing the `node_modules` folder, then running `npm install` and afterwords `prisma generate`
 
 Setup the necessary environment files. Run `touch .env.local`. Within this file there are 3 keys that must be added:
 
