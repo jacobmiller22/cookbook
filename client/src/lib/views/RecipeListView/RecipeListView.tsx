@@ -25,7 +25,7 @@ const RecipeListView = ({}: RecipeListViewProps) => {
         setIngredients={setIngredients}
       />
       <RecipeList recipes={recipes} isLoading={isLoading} />
-      <Box display="flex">
+      <Box display="flex" height="100%">
         <Spacer />
         <ResultsDescriptor
           results={{ displayed: recipes.length, total: recipes.length }}

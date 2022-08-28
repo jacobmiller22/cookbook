@@ -27,7 +27,7 @@ const SearchView = ({ bannerContent }: SearchViewProps) => {
   const handleAddRecipe = () => router.push(newRecipeRoute.path);
 
   return (
-    <Box width="100%">
+    <Box width="100%" height="100%">
       <Banner sx={{ backgroundColor: theme.palette.background.paper }}>
         <Box
           display="flex"
@@ -67,9 +67,8 @@ const SearchView = ({ bannerContent }: SearchViewProps) => {
               setIngredients={setIngredients}
             />
           </Box>
-          <Box display="flex" flexDirection="column" sx={{ height: "100%" }}>
+          <Box display="flex" flexDirection="column" height="100%">
             <RecipeList recipes={recipes} isLoading={isLoading} />
-            <Spacer />
             <ResultsDescriptor
               results={{ total: recipes.length, displayed: recipes.length }}
               justifyContent="flex-end"

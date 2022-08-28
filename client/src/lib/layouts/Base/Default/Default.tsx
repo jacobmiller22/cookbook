@@ -45,7 +45,7 @@ const Default = ({
   return (
     <div
       style={{
-        height: "inherit",
+        minHeight: "100%",
       }}
     >
       <div
