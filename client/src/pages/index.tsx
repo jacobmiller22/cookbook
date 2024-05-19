@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { Base } from "lib/layouts";
-import { SearchView } from "lib/views";
+import { SearchView, RecommendedView } from "lib/views";
 
 /** Components */
 import TopbarGroup from "lib/components/Atomics/TopbarGroup";
@@ -14,6 +14,7 @@ const IndexPage: NextPage = () => (
       <SearchView
         bannerContent={<Typography variant="h6">All recipes</Typography>}
       />
+      <RecommendedView />
     </RecipeProvider>
   </Base>
 );

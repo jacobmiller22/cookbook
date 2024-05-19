@@ -1,15 +1,21 @@
 /** Components  */
-import { TextField } from "@mui/material";
+import { SxProps, TextField, TextFieldProps } from "@mui/material";
 
-const SearchBar = ({ marginRight, ...rest }) => {
+type SearchBarProps = {
+  marginRight?: string;
+  textFieldProps?: TextFieldProps;
+  sx?: SxProps;
+};
+
+const SearchBar = ({ marginRight, textFieldProps, sx }: SearchBarProps) => {
   return (
     <TextField
       variant="outlined"
       size="small"
       placeholder="Search..."
       inputProps={{ sx: { lineHeight: "1.25px", height: "inherit" } }}
-      sx={{ marginRight }}
-      {...rest}
+      sx={{ marginRight, ...sx }}
+      {...textFieldProps}
     />
   );
 };

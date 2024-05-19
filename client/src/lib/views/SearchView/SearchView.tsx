@@ -23,19 +23,24 @@ const SearchView = ({ bannerContent }: SearchViewProps) => {
   const handleAddRecipe = () => router.push(newRecipeRoute.path);
 
   return (
-    <Box width="100%" height="100%">
-      <Banner sx={{ backgroundColor: theme.palette.background.paper }}>
-        <Box
-          display="flex"
-          justifyContent="flex-start"
-          sx={{ maxWidth: theme.layout.contentWidth }}
-          width="100%"
-          flexDirection="row"
-          alignItems="center"
-        >
-          {bannerContent}
-          <Spacer />
-          <SearchBar marginRight="1rem" />
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      height="100%"
+      width="100%"
+      marginTop="1rem"
+    >
+      <Box sx={{ maxWidth: theme.layout.contentWidth }} width="100%">
+        <Box display="flex">
+          <SearchBar
+            marginRight="1rem"
+            sx={{ background: theme.palette.background.paper }}
+            textFieldProps={{
+              placeholder: "Search all recipes...",
+              fullWidth: true,
+            }}
+          />
           <Tooltip title="New recipe">
             <Button
               variant="outlined"
@@ -47,29 +52,18 @@ const SearchView = ({ bannerContent }: SearchViewProps) => {
             </Button>
           </Tooltip>
         </Box>
-      </Banner>
-      <Divider />
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        height="100%"
-        width="100%"
-      >
-        <Box sx={{ maxWidth: theme.layout.contentWidth }} width="100%">
-          <Box>
-            <IngredientPanel
-              ingredients={ingredients}
-              setIngredients={setIngredients}
-            />
-          </Box>
-          <Box display="flex" flexDirection="column" height="100%">
-            <RecipeList recipes={recipes} isLoading={isLoading} />
-            <Box display="flex" justifyContent="flex-end" width="100%">
-              <Typography variant="body2">
-                Showing {recipes.length || 0} recipe{recipes.length > 1 && "s"}
-              </Typography>
-            </Box>
+        <Box>
+          <IngredientPanel
+            ingredients={ingredients}
+            setIngredients={setIngredients}
+          />
+        </Box>
+        <Box display="flex" flexDirection="column" height="100%">
+          <RecipeList recipes={recipes} isLoading={isLoading} />
+          <Box display="flex" justifyContent="flex-end" width="100%">
+            <Typography variant="body2">
+              Showing {recipes.length || 0} recipe{recipes.length > 1 && "s"}
+            </Typography>
           </Box>
         </Box>
       </Box>

@@ -14,3 +14,4 @@ export { default as BackButton } from "./BackButton";
 export { default as ArrayField } from "./ArrayField";
 export { default as Banner } from "./Banner";
 export { default as SearchBar } from "./SearchBar";
+export { default as SlidingStack } from "./SlidingStack";

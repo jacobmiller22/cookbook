@@ -5,3 +5,4 @@ export { default as UserProfile } from "./UserProfile";
 export { default as InternalProfileView } from "./InternalProfileView";
 export { default as ExternalProfileView } from "./ExternalProfileView";
 export { default as CreateAccountView } from "./CreateAccountView";
+export { default as RecommendedView } from "./RecommendedView";
